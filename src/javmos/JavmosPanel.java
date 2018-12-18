@@ -1,6 +1,8 @@
 package javmos;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 
@@ -34,6 +36,16 @@ public class JavmosPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics graphics) {
-        // Complete me
+        Graphics2D thinLine = (Graphics2D) graphics;
+        Graphics2D boldLine = (Graphics2D) graphics;
+
+        for (int i = 0; i < 800 / 50; i++) {
+            thinLine.drawLine(50 * i, 0, 50 * i, 800);
+            thinLine.drawLine(0, 50 * i, 800, 50 * i);
+        }
+
+        boldLine.setStroke(new BasicStroke(3));
+        boldLine.drawLine(400, 0, 400, 800);
+        boldLine.drawLine(0, 400, 800, 400);
     }
 }
