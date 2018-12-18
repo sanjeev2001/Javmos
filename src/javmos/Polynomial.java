@@ -8,7 +8,12 @@ public class Polynomial {
 
     public Polynomial(JavmosGUI gui, String polynomial) throws PolynomialException {
         try {
-            // Complete me
+            System.out.println(polynomial);
+            if (polynomial.contains("=")) {
+                polynomial = polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length());
+            }
+
+            System.out.println(polynomial);
         } catch (Exception exception) {
             throw new PolynomialException(polynomial + " is not a valid polynomial!");
         }

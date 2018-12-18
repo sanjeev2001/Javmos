@@ -40,12 +40,12 @@ public class JavmosPanel extends JPanel {
         Graphics2D boldLine = (Graphics2D) graphics;
 
         for (int i = 0; i < 800 / 50; i++) {
-            thinLine.drawLine(50 * i, 0, 50 * i, 800);
+            thinLine.drawLine(50 * i, 0, 50 * i, 800); //(x1, y1, x2, y2) draws thin vertical line every 50px
             thinLine.drawLine(0, 50 * i, 800, 50 * i);
         }
 
         boldLine.setStroke(new BasicStroke(3));
-        boldLine.drawLine(400, 0, 400, 800);
-        boldLine.drawLine(0, 400, 800, 400);
+        boldLine.drawLine(400, 0, 400, 800); //y-axis
+        boldLine.drawLine(0, 400, 800, 400); //x-axis
     }
 }

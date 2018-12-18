@@ -228,6 +228,5 @@ public final class JavmosGUI {
 
     public static void main(String[] args) {
         JavmosGUI polynomialGUI = new JavmosGUI();
-        System.out.println("derek was here");
     }
 }
