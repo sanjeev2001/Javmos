@@ -9,7 +9,7 @@ public class Polynomial {
     public final int ATTEMPTS = 15;
     public double[] coefficients;
     public int[] degrees;
-    public JavmosGUI polynomialGUI = new JavmosGUI();
+    //public JavmosGUI polynomialGUI = new JavmosGUI();
     public String polynomial;
 
     public Polynomial(JavmosGUI gui, String polynomial) throws PolynomialException {
@@ -26,7 +26,19 @@ public class Polynomial {
     }
 
     public Polynomial(JavmosGUI gui, double[] coefficients, int[] degrees) {
-
+        String[] terms = polynomial.split("\\+|\\-");
+        for (int i = 0; i < terms.length; i++) {
+            if (polynomial.contains("x^")) {
+                coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length() - 1));
+            } else if (polynomial.contains("x") && !polynomial.contains("^")) {
+                coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                degrees[i] = 1;
+            } else {
+                coefficients[i] = Double.parseDouble(terms[i]);
+                degrees[i] = 0;
+            }
+        }
     }
 
     public String getEquation() {
@@ -34,8 +46,8 @@ public class Polynomial {
     }
 
     public String getFirstDerivative() {
-        // Complete me
-        return "";
+        System.out.println(coefficients[0]);
+        return "lul";
     }
 
     public String getSecondDerivative() {
@@ -59,11 +71,12 @@ public class Polynomial {
         return 0.0;
     }
 
+    /*
     public Polynomial getDerivative() {
 
         return new Polynomial(polynomialGUI, coefficients, degrees);
     }
-
+   */
     public Double newtonsMethod(RootType rootType, double guess, int attempts) {
         return 0.0;
     }
