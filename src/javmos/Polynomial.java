@@ -25,6 +25,7 @@ public class Polynomial {
             }
 
             String[] terms = polynomial.split("\\+|\\-");
+            int termsStart = 0;
 
             for (int i = 0; i < terms.length; i++) {
                 if (terms[i].contains("x^")) {
@@ -33,10 +34,15 @@ public class Polynomial {
                 } else if (terms[i].contains("x") && !terms[i].contains("^")) {
                     coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
                     degrees[i] = 1;
-                } else {
+                } else if (!terms[i].equals("")) {
                     coefficients[i] = Double.parseDouble(terms[i]);
                     degrees[i] = 0;
                 }
+
+                if (polynomial.contains("-") && polynomial.substring(termsStart, termsStart + 1).equals("-")) {
+                    coefficients[i] *= -1;
+                }
+                termsStart += i == 0 ? terms[i].length() : 1 + terms[i].length();
             }
 
             //System.out.println(polynomial);
