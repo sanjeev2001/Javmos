@@ -31,7 +31,7 @@ public class Polynomial {
                     coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
                     degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length()));
                 } else if (terms[i].contains("x") && !terms[i].contains("^")) {
-                    coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                    coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
                     degrees[i] = 1;
                 } else {
                     coefficients[i] = Double.parseDouble(terms[i]);
