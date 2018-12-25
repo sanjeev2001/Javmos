@@ -7,26 +7,52 @@ import javmos.exceptions.PolynomialException;
 public class Polynomial {
 
     public final int ATTEMPTS = 15;
-    public double[] coefficients;
-    public int[] degrees;
-    //public JavmosGUI polynomialGUI = new JavmosGUI();
-    public String polynomial;
+    public final double[] coefficients;
+    public final int[] degrees;
+    public final JavmosGUI gui;
+    public final String polynomial;
 
     public Polynomial(JavmosGUI gui, String polynomial) throws PolynomialException {
         try {
-            System.out.println(polynomial);
+            this.gui = gui;
+            coefficients = new double[gui.getEquationField().split("\\+|\\-").length];
+            degrees = new int[gui.getEquationField().split("\\+|\\-").length];
+            this.polynomial = polynomial;
+
+            //System.out.println(polynomial);
             if (polynomial.contains("=")) {
                 polynomial = polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length());
             }
 
-            System.out.println(polynomial);
+            String[] terms = polynomial.split("\\+|\\-");
+
+            for (int i = 0; i < terms.length; i++) {
+                if (terms[i].contains("x^")) {
+                    coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                    degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length()));
+                } else if (terms[i].contains("x") && !terms[i].contains("^")) {
+                    coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                    degrees[i] = 1;
+                } else {
+                    coefficients[i] = Double.parseDouble(terms[i]);
+                    degrees[i] = 0;
+                }
+            }
+
+            //System.out.println(polynomial);
         } catch (Exception exception) {
             throw new PolynomialException(polynomial + " is not a valid polynomial!");
         }
     }
 
     public Polynomial(JavmosGUI gui, double[] coefficients, int[] degrees) {
+        this.gui = gui;
+        coefficients = new double[gui.getEquationField().split("\\+|\\-").length];
+        this.coefficients = coefficients;
+        this.degrees = degrees;
+        polynomial = gui.getEquationField();
         String[] terms = polynomial.split("\\+|\\-");
+        /*
         for (int i = 0; i < terms.length; i++) {
             if (polynomial.contains("x^")) {
                 coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
@@ -39,6 +65,7 @@ public class Polynomial {
                 degrees[i] = 0;
             }
         }
+        */
     }
 
     public String getEquation() {
@@ -46,8 +73,12 @@ public class Polynomial {
     }
 
     public String getFirstDerivative() {
-        System.out.println(coefficients[0]);
-        return "lul";
+        Polynomial test = new Polynomial(gui, coefficients, degrees);
+        for (int i = 0; i < coefficients.length; i++) {
+            System.out.println(coefficients[i] + " " + degrees[i]);
+
+        }
+        return String.valueOf(coefficients[0]);
     }
 
     public String getSecondDerivative() {
