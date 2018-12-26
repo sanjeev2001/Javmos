@@ -32,15 +32,15 @@ public class CartesianPlane extends java.lang.Object {
         for (int i = 0; i < 800 / test; i++) {
             graphics2D.drawLine(400 - test * i, 395,400 - test * i, 405); //(x1, y1, x2, y2) draws thin vertical line every 50px
             graphics2D.drawLine(395,400 - test * i, 405,400 - test * i);
-            graphics2D.drawString(Integer.toString(-i), 405 - test * i, 399); // Draws horizontal axis numbers
-            graphics2D.drawString(Integer.toString(i), 405, 399 - test * i); // Draws horizontal axis numbers
+            graphics2D.drawString(Integer.toString(-i), 405 - test * i, 399); // Draws negative horizontal axis numbers
+            graphics2D.drawString(Integer.toString(i), 405, 399 - test * i); // Draws positive vertical axis numbers
         }
         
         for (int i = 0; i < 800 / test; i++) {
             graphics2D.drawLine(400 + test * i, 395,400 + test * i, 405); //(x1, y1, x2, y2) draws thin vertical line every 50px
             graphics2D.drawLine(395,400 + test * i, 405,400 + test * i);
-            graphics2D.drawString(Integer.toString(i), 405 + test * i, 399); // Draws horizontal axis numbers
-            graphics2D.drawString(Integer.toString(-i), 405, 399 + test * i); // Draws horizontal axis numbers
+            graphics2D.drawString(Integer.toString(i), 405 + test * i, 399); // Draws positive horizontal axis numbers
+            graphics2D.drawString(Integer.toString(-i), 405, 399 + test * i); // Draws negative vertical axis numbers
         }
 
     }
