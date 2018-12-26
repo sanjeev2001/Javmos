@@ -16,8 +16,13 @@ public class CartesianPlane extends java.lang.Object {
         graphics2D.clearRect(0, 0, 800, 800);
         
         for (int i = 0; i < 800 / test; i++) {
-            graphics2D.drawLine(test * i, 0, test * i, 800); //(x1, y1, x2, y2) draws thin vertical line every 50px
-            graphics2D.drawLine(0, test * i, 800, test * i);
+            graphics2D.drawLine(400 - test * i, 0,400 - test * i, 800); //(x1, y1, x2, y2) draws thin vertical line every 50px
+            graphics2D.drawLine(0,400 - test * i, 800,400 - test * i);
+        }
+        
+        for (int i = 0; i < 800 / test; i++) {
+            graphics2D.drawLine(400 + test * i, 0,400 + test * i, 800); //(x1, y1, x2, y2) draws thin vertical line every 50px
+            graphics2D.drawLine(0,400 + test * i, 800,400 + test * i);
         }
         
         graphics2D.setStroke(new BasicStroke(3));
@@ -25,9 +30,13 @@ public class CartesianPlane extends java.lang.Object {
         graphics2D.drawLine(0, 400, 800, 400); //x-axis
 
         for (int i = 0; i < 800 / test; i++) {
-            graphics2D.drawLine(test * i, 395, test * i, 405);
-            graphics2D.drawLine(395, test * i, 405, test * i);
-
+            graphics2D.drawLine(400 - test * i, 395,400 - test * i, 405); //(x1, y1, x2, y2) draws thin vertical line every 50px
+            graphics2D.drawLine(395,400 - test * i, 405,400 - test * i);
+        }
+        
+        for (int i = 0; i < 800 / test; i++) {
+            graphics2D.drawLine(400 + test * i, 395,400 + test * i, 405); //(x1, y1, x2, y2) draws thin vertical line every 50px
+            graphics2D.drawLine(395,400 + test * i, 405,400 + test * i);
         }
 
     }
