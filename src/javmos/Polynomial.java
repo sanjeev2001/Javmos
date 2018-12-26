@@ -15,16 +15,11 @@ public class Polynomial {
     public Polynomial(JavmosGUI gui, String polynomial) throws PolynomialException {
         try {
             this.gui = gui;
-            coefficients = new double[gui.getEquationField().split("\\+|\\-").length];
-            degrees = new int[gui.getEquationField().split("\\+|\\-").length];
             this.polynomial = polynomial;
-
-            //System.out.println(polynomial);
-            if (polynomial.contains("=")) {
-                polynomial = polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length());
-            }
-
-            String[] terms = polynomial.split("\\+|\\-");
+            polynomial = polynomial.contains("=") ? polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : polynomial;
+            String[] terms = polynomial.charAt(0) == '-' ? polynomial.substring(1, polynomial.length()).split("\\+|\\-") : polynomial.split("\\+|\\-");
+            coefficients = new double[terms.length];
+            degrees = new int[terms.length];
             int termsStart = 0;
 
             for (int i = 0; i < terms.length; i++) {
@@ -39,13 +34,10 @@ public class Polynomial {
                     degrees[i] = 0;
                 }
 
-                if (polynomial.contains("-") && polynomial.substring(termsStart, termsStart + 1).equals("-")) {
-                    coefficients[i] *= -1;
-                }
-                termsStart += i == 0 ? terms[i].length() : 1 + terms[i].length();
+                coefficients[i] *= (polynomial.contains("-") && polynomial.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1;
+                termsStart += i == 0 && !(polynomial.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1;
             }
 
-            //System.out.println(polynomial);
         } catch (Exception exception) {
             throw new PolynomialException(polynomial + " is not a valid polynomial!");
         }
@@ -58,20 +50,6 @@ public class Polynomial {
         this.degrees = degrees;
         polynomial = gui.getEquationField();
         String[] terms = polynomial.split("\\+|\\-");
-        /*
-        for (int i = 0; i < terms.length; i++) {
-            if (polynomial.contains("x^")) {
-                coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
-                degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length() - 1));
-            } else if (polynomial.contains("x") && !polynomial.contains("^")) {
-                coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
-                degrees[i] = 1;
-            } else {
-                coefficients[i] = Double.parseDouble(terms[i]);
-                degrees[i] = 0;
-            }
-        }
-        */
     }
 
     public String getEquation() {
@@ -79,12 +57,7 @@ public class Polynomial {
     }
 
     public String getFirstDerivative() {
-        Polynomial test = new Polynomial(gui, coefficients, degrees);
-        for (int i = 0; i < coefficients.length; i++) {
-            System.out.println(coefficients[i] + " " + degrees[i]);
-
-        }
-        return String.valueOf(coefficients[0]);
+        return "";
     }
 
     public String getSecondDerivative() {
