@@ -29,7 +29,7 @@ public class Polynomial {
                 } else if (terms[i].contains("x") && !terms[i].contains("^")) {
                     coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
                     degrees[i] = 1;
-                } else if (!terms[i].equals("")) {
+                } else {
                     coefficients[i] = Double.parseDouble(terms[i]);
                     degrees[i] = 0;
                 }
@@ -45,19 +45,17 @@ public class Polynomial {
 
     public Polynomial(JavmosGUI gui, double[] coefficients, int[] degrees) {
         this.gui = gui;
-        coefficients = new double[gui.getEquationField().split("\\+|\\-").length];
         this.coefficients = coefficients;
         this.degrees = degrees;
-        polynomial = gui.getEquationField();
-        String[] terms = polynomial.split("\\+|\\-");
+        this.polynomial = gui.getEquationField();
     }
 
     public String getEquation() {
-        return "";
+        return polynomial.contains("=") ? "f(x)=" + polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : "f(x)=" + polynomial;
     }
 
     public String getFirstDerivative() {
-        return "";
+        return polynomial;
     }
 
     public String getSecondDerivative() {
@@ -69,15 +67,15 @@ public class Polynomial {
         return new HashSet<>();
     }
 
-    public void drawPolynomial(Graphics2D graphics2D) {
+    private void drawPolynomial(Graphics2D graphics2D) {
 
     }
 
-    public int getDegree() {
+    private int getDegree() {
         return 0;
     }
 
-    public double getValueAt(double x) {
+    private double getValueAt(double x) {
         return 0.0;
     }
 
@@ -87,7 +85,7 @@ public class Polynomial {
         return new Polynomial(polynomialGUI, coefficients, degrees);
     }
    */
-    public Double newtonsMethod(RootType rootType, double guess, int attempts) {
+    private Double newtonsMethod(RootType rootType, double guess, int attempts) {
         return 0.0;
     }
 }
