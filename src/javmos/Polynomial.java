@@ -55,7 +55,18 @@ public class Polynomial {
     }
 
     public String getFirstDerivative() {
-        return polynomial;
+        Polynomial firstDerivative = new Polynomial(gui, coefficients, degrees);
+        String firstString = "f'(x)=";
+
+        for (int i = 0; i < coefficients.length; i++) {
+            if (degrees[i] > 1) {
+                firstString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1) : String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1);
+            } else if (degrees[i] == 1) {
+                firstString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i]) : String.valueOf(coefficients[i] * degrees[i]);
+            }
+        }
+
+        return firstString;
     }
 
     public String getSecondDerivative() {
