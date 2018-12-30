@@ -61,8 +61,26 @@ public class Polynomial {
     }
 
     public Polynomial getDerivative() {
+        int numOfTerms = 0;
+        int offset = 0;
 
-        return new Polynomial(gui, coefficients, degrees);
+        for (int i = 0; i < degrees.length; i++) {
+            numOfTerms += degrees[i] > 0 ? 1 : 0;
+        }
+
+        double[] firstCoefficients = new double[numOfTerms];
+        int[] firstDegrees = new int[numOfTerms];
+
+        for (int i = 0; i < coefficients.length; i++) {
+            if (degrees[i] > 0) {
+                firstCoefficients[i - offset] = coefficients[i] * degrees[i];
+                firstDegrees[i - offset] = degrees[i] - 1;
+            } else {
+                offset += 1;
+            }
+        }
+
+        return new Polynomial(gui, firstCoefficients, firstDegrees);
     }
 
     public String getEquation() {
@@ -71,6 +89,9 @@ public class Polynomial {
 
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
+
+        Polynomial test = new Polynomial(gui, coefficients, degrees);
+        test.getDerivative();
 
         for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 1) {
