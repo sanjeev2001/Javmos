@@ -1,6 +1,7 @@
 package javmos;
 
 import java.awt.Graphics2D;
+import java.util.Arrays;
 import java.util.HashSet;
 import javmos.exceptions.PolynomialException;
 
@@ -55,11 +56,11 @@ public class Polynomial {
     }
 
     private int getDegree() {
-        return 0;
+        Arrays.sort(degrees);
+        return degrees[degrees.length - 1];
     }
 
     public Polynomial getDerivative() {
-
 
         return new Polynomial(gui, coefficients, degrees);
     }
