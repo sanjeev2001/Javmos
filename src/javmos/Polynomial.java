@@ -89,7 +89,8 @@ public class Polynomial {
 
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
-
+        Polynomial test = new Polynomial(gui, coefficients, degrees);
+        test.getValueAt(1);
         for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 1) {
                 firstString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1) : String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1);
@@ -106,10 +107,11 @@ public class Polynomial {
     }
 
     public String getSecondDerivative() {
-        return new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative();
+        return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
     }
 
     private double getValueAt(double x) {
+        System.out.println(polynomial);
         return 0.0;
     }
 
