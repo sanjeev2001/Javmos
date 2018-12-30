@@ -90,9 +90,6 @@ public class Polynomial {
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
 
-        Polynomial test = new Polynomial(gui, coefficients, degrees);
-        test.getDerivative();
-
         for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 1) {
                 firstString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1) : String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1);
@@ -109,17 +106,7 @@ public class Polynomial {
     }
 
     public String getSecondDerivative() {
-        String secondString = "f''(x)=";
-
-        for (int i = 0; i < coefficients.length; i++) {
-            if (degrees[i] - 2 > 0) {
-                secondString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) + "x" + (degrees[i] - 2 == 1 ? "" : "^") + String.valueOf(degrees[i] - 2 == 1 ? "" : degrees[i] - 2) : String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) + "x" + (degrees[i] - 2 == 1 ? "" : "^") + String.valueOf(degrees[i] - 2 == 1 ? "" : degrees[i] - 2);
-            } else if (degrees[i] - 2 == 0) {
-                secondString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) : String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1));
-            }
-        }
-
-        return secondString;
+        return new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative();
     }
 
     private double getValueAt(double x) {
