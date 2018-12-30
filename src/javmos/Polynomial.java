@@ -55,7 +55,6 @@ public class Polynomial {
     }
 
     public String getFirstDerivative() {
-        Polynomial firstDerivative = new Polynomial(gui, coefficients, degrees);
         String firstString = "f'(x)=";
 
         for (int i = 0; i < coefficients.length; i++) {
@@ -70,8 +69,17 @@ public class Polynomial {
     }
 
     public String getSecondDerivative() {
-        // Complete me
-        return "";
+        String secondString = "f''(x)=";
+
+        for (int i = 0; i < coefficients.length; i++) {
+            if (degrees[i] - 2 > 0) {
+                secondString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) + "x" + (degrees[i] - 2 == 1 ? "" : "^") + String.valueOf(degrees[i] - 2 == 1 ? "" : degrees[i] - 2) : String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) + "x" + (degrees[i] - 2 == 1 ? "" : "^") + String.valueOf(degrees[i] - 2 == 1 ? "" : degrees[i] - 2);
+            } else if (degrees[i] - 2 == 0) {
+                secondString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) : String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1));
+            }
+        }
+
+        return secondString;
     }
 
     public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
