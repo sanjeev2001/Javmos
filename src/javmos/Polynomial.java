@@ -50,6 +50,20 @@ public class Polynomial {
         this.polynomial = gui.getEquationField();
     }
 
+    private void drawPolynomial(Graphics2D graphics2D) {
+
+    }
+
+    private int getDegree() {
+        return 0;
+    }
+
+    public Polynomial getDerivative() {
+
+
+        return new Polynomial(gui, coefficients, degrees);
+    }
+
     public String getEquation() {
         return polynomial.contains("=") ? "f(x)=" + polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : "f(x)=" + polynomial;
     }
@@ -68,6 +82,10 @@ public class Polynomial {
         return firstString;
     }
 
+    public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
+        return new HashSet<>();
+    }
+
     public String getSecondDerivative() {
         String secondString = "f''(x)=";
 
@@ -82,28 +100,10 @@ public class Polynomial {
         return secondString;
     }
 
-    public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
-        return new HashSet<>();
-    }
-
-    private void drawPolynomial(Graphics2D graphics2D) {
-
-    }
-
-    private int getDegree() {
-        return 0;
-    }
-
     private double getValueAt(double x) {
         return 0.0;
     }
 
-    /*
-    public Polynomial getDerivative() {
-
-        return new Polynomial(polynomialGUI, coefficients, degrees);
-    }
-   */
     private Double newtonsMethod(RootType rootType, double guess, int attempts) {
         return 0.0;
     }
