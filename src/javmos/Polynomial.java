@@ -25,7 +25,11 @@ public class Polynomial {
 
             for (int i = 0; i < terms.length; i++) {
                 if (terms[i].contains("x^")) {
-                    coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                    if (terms[i].substring(0, 2).equals("x^")) {
+                        coefficients[i] = 1;
+                    } else {
+                        coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                    }
                     degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length()));
                 } else if (terms[i].contains("x") && !terms[i].contains("^")) {
                     coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
