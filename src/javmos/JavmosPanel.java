@@ -1,6 +1,5 @@
 package javmos;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
@@ -38,5 +37,6 @@ public class JavmosPanel extends JPanel {
     public void paintComponent(Graphics graphics) {
         plane = new CartesianPlane(gui);
         plane.drawPlane((Graphics2D) graphics);
+        polynomial.drawPolynomial((Graphics2D) graphics);
     }
 }
