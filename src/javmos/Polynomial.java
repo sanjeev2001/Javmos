@@ -1,9 +1,9 @@
 package javmos;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import javmos.exceptions.PolynomialException;
@@ -17,7 +17,6 @@ public class Polynomial {
     public final String polynomial;
 
     public Polynomial(JavmosGUI gui, String polynomial) throws PolynomialException {
-
         try {
             this.gui = gui;
             this.polynomial = polynomial;
@@ -56,7 +55,7 @@ public class Polynomial {
         this.gui = gui;
         this.coefficients = coefficients;
         this.degrees = degrees;
-        this.polynomial = gui.getEquationField();
+        this.polynomial = "";
     }
 
     public void drawPolynomial(Graphics2D graphics2D) {
@@ -74,8 +73,9 @@ public class Polynomial {
     }
 
     private int getDegree() {
-        Arrays.sort(degrees);
-        return degrees[degrees.length - 1];
+        int[] temp = degrees;
+        Arrays.sort(temp);
+        return temp[temp.length - 1];
     }
 
     public Polynomial getDerivative() {
@@ -123,16 +123,15 @@ public class Polynomial {
     }
 
     public String getSecondDerivative() {
+        Polynomial test = new Polynomial(gui, coefficients, degrees);
+        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 1, ATTEMPTS));
         return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
     }
 
     private double getValueAt(double x) {
         double ans = 0.0;
-        String localPoly = polynomial;
-        localPoly = polynomial.contains("=") ? polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : polynomial;
-        String[] terms = localPoly.charAt(0) == '-' ? localPoly.substring(1, localPoly.length()).split("\\+|\\-") : localPoly.split("\\+|\\-");
 
-        for (int i = 0; i < terms.length; i++) {
+        for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 0) {
                 ans += coefficients[i] * Math.pow(x, degrees[i]);
             } else {
@@ -144,6 +143,16 @@ public class Polynomial {
     }
 
     private Double newtonsMethod(RootType rootType, double guess, int attempts) {
-        return 0.0;
+        DecimalFormat thousandth = new DecimalFormat("#.###");
+        Polynomial numerator = new Polynomial(gui, coefficients, degrees);
+        Polynomial denominator = numerator.getDerivative();
+
+        double approximation = guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess));
+
+        if (Math.abs(approximation - guess) <= 0.000001) {
+            return Double.parseDouble(thousandth.format(approximation));
+        } else {
+            return newtonsMethod(rootType, approximation, attempts - 1);
+        }
     }
 }
