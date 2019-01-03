@@ -1,6 +1,9 @@
 package javmos;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 import java.util.Arrays;
 import java.util.HashSet;
 import javmos.exceptions.PolynomialException;
@@ -14,6 +17,7 @@ public class Polynomial {
     public final String polynomial;
 
     public Polynomial(JavmosGUI gui, String polynomial) throws PolynomialException {
+
         try {
             this.gui = gui;
             this.polynomial = polynomial;
@@ -55,8 +59,18 @@ public class Polynomial {
         this.polynomial = gui.getEquationField();
     }
 
-    private void drawPolynomial(Graphics2D graphics2D) {
-
+    public void drawPolynomial(Graphics2D graphics2D) {
+        for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.001) {
+            if (getValueAt(i) <= gui.getMaxRange() && getValueAt(i) >= gui.getMinRange()) {
+                double x1 = 400 + i * gui.getZoom() / gui.getDomainStep();
+                double x2 = 400 + (i + 0.001) * gui.getZoom() / gui.getDomainStep();
+                double y1 = 400 - getValueAt(i) * gui.getZoom() / gui.getRangeStep();
+                double y2 = 400 - getValueAt(i + 0.001) * gui.getZoom() / gui.getRangeStep();
+                //Sets the origin point at (400,400) and draws from to the left and right
+                graphics2D.setStroke(new BasicStroke(2));
+                graphics2D.draw(new Line2D.Double(x1, y1, x2, y2));
+            }
+        }
     }
 
     private int getDegree() {
