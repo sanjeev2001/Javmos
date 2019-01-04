@@ -10,7 +10,7 @@ import javmos.exceptions.PolynomialException;
 
 public class Polynomial {
 
-    public final int ATTEMPTS = 15;
+    public final int ATTEMPTS = 30;
     public final double[] coefficients;
     public final int[] degrees;
     public final JavmosGUI gui;
@@ -119,12 +119,21 @@ public class Polynomial {
     }
 
     public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
-        return new HashSet<>();
+        Polynomial function = new Polynomial(gui, coefficients, degrees);
+        HashSet<Point> roots = new HashSet<>(function.getDegree());
+        if (rootType.getPointName().equals("x-intercept")) {
+            roots.add(new Point(gui, RootType.X_INTERCEPT, maxDomain, 0));
+        } else if (rootType.getPointName().equals("Critical Point")) {
+            roots.add(new Point(gui, RootType.CRITICAL_POINT, maxDomain, 0));
+        } else {
+            roots.add(new Point(gui, RootType.INFLECTION_POINT, maxDomain, 0));
+        }
+        return roots;
     }
 
     public String getSecondDerivative() {
         Polynomial test = new Polynomial(gui, coefficients, degrees);
-        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 1, ATTEMPTS));
+        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 3, ATTEMPTS));
         return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
     }
 
@@ -144,15 +153,28 @@ public class Polynomial {
 
     private Double newtonsMethod(RootType rootType, double guess, int attempts) {
         DecimalFormat thousandth = new DecimalFormat("#.###");
-        Polynomial numerator = new Polynomial(gui, coefficients, degrees);
-        Polynomial denominator = numerator.getDerivative();
+        Polynomial numerator;
+        Polynomial denominator;
 
-        double approximation = guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess));
+        //System.out.println(attempts);
 
-        if (Math.abs(approximation - guess) <= 0.000001) {
-            return Double.parseDouble(thousandth.format(approximation));
+        if (rootType.getPointName().equals("x-intercept")) {
+            numerator = new Polynomial(gui, coefficients, degrees);
+            denominator = numerator.getDerivative();
+        } else if (rootType.getPointName().equals("Critical Point")) {
+            numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
+            denominator = numerator.getDerivative().getDerivative();
         } else {
-            return newtonsMethod(rootType, approximation, attempts - 1);
+            numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
+            denominator = numerator.getDerivative().getDerivative().getDerivative();
+        }
+
+        if (attempts == 0 && denominator.getValueAt(guess) == 0) {
+            return null;
+        } else if (Math.abs((guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))) - guess) <= 0.000001) {
+            return Double.parseDouble(thousandth.format(guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))));
+        } else {
+            return newtonsMethod(rootType, guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess)), attempts - 1);
         }
     }
 }
