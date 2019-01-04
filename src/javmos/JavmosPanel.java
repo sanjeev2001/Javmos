@@ -36,11 +36,9 @@ public class JavmosPanel extends JPanel {
     @Override
     public void paintComponent(Graphics graphics) {
         plane = new CartesianPlane(gui);
+        plane.drawPlane((Graphics2D) graphics);
         if (polynomialChanged == true) {
-            plane.drawPlane((Graphics2D) graphics);
             polynomial.drawPolynomial((Graphics2D) graphics);
-        } else {
-            plane.drawPlane((Graphics2D) graphics);
         }
     }
 }
