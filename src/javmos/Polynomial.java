@@ -121,19 +121,24 @@ public class Polynomial {
     public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
         Polynomial function = new Polynomial(gui, coefficients, degrees);
         HashSet<Point> roots = new HashSet<>(function.getDegree());
-        if (rootType.getPointName().equals("x-intercept")) {
-            roots.add(new Point(gui, RootType.X_INTERCEPT, maxDomain, 0));
-        } else if (rootType.getPointName().equals("Critical Point")) {
-            roots.add(new Point(gui, RootType.CRITICAL_POINT, maxDomain, 0));
-        } else {
-            roots.add(new Point(gui, RootType.INFLECTION_POINT, maxDomain, 0));
+
+        switch (rootType.getPointName()) {
+            case "x-intercept":
+                roots.add(new Point(gui, RootType.X_INTERCEPT, maxDomain, 0));
+                break;
+            case "Critical Point":
+                roots.add(new Point(gui, RootType.CRITICAL_POINT, maxDomain, 0));
+                break;
+            default:
+                roots.add(new Point(gui, RootType.INFLECTION_POINT, maxDomain, 0));
+                break;
         }
         return roots;
     }
 
     public String getSecondDerivative() {
         Polynomial test = new Polynomial(gui, coefficients, degrees);
-        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 3, ATTEMPTS));
+        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 0, ATTEMPTS));
         return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
     }
 
@@ -156,7 +161,7 @@ public class Polynomial {
         Polynomial numerator;
         Polynomial denominator;
 
-        //System.out.println(attempts);
+        System.out.println(guess - (new Polynomial(gui, coefficients, degrees).getValueAt(guess) / new Polynomial(gui, coefficients, degrees).getDerivative().getValueAt(guess)));
 
         if (rootType.getPointName().equals("x-intercept")) {
             numerator = new Polynomial(gui, coefficients, degrees);
@@ -169,7 +174,7 @@ public class Polynomial {
             denominator = numerator.getDerivative().getDerivative().getDerivative();
         }
 
-        if (attempts == 0 && denominator.getValueAt(guess) == 0) {
+        if (attempts == 0 || denominator.getValueAt(guess) == 0) {
             return null;
         } else if (Math.abs((guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))) - guess) <= 0.000001) {
             return Double.parseDouble(thousandth.format(guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))));
