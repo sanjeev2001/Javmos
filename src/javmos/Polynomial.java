@@ -2,15 +2,17 @@ package javmos;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import javmos.exceptions.PolynomialException;
 
 public class Polynomial {
 
-    public final int ATTEMPTS = 30;
+    public final int ATTEMPTS = 100;
     public final double[] coefficients;
     public final int[] degrees;
     public final JavmosGUI gui;
@@ -97,7 +99,6 @@ public class Polynomial {
                 offset += 1;
             }
         }
-
         return new Polynomial(gui, firstCoefficients, firstDegrees);
     }
 
@@ -121,24 +122,25 @@ public class Polynomial {
     public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
         Polynomial function = new Polynomial(gui, coefficients, degrees);
         HashSet<Point> roots = new HashSet<>(function.getDegree());
-
-        switch (rootType.getPointName()) {
-            case "x-intercept":
-                roots.add(new Point(gui, RootType.X_INTERCEPT, maxDomain, 0));
-                break;
-            case "Critical Point":
-                roots.add(new Point(gui, RootType.CRITICAL_POINT, maxDomain, 0));
-                break;
-            default:
-                roots.add(new Point(gui, RootType.INFLECTION_POINT, maxDomain, 0));
-                break;
+        if (rootType.getPointName().equals("x-intercept")) {
+            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
+                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
+            }
+        } else if (rootType.getPointName().equals("Critical Point")) {
+            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
+                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+            }
+        } else {
+            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
+                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+            }
         }
         return roots;
     }
 
     public String getSecondDerivative() {
         Polynomial test = new Polynomial(gui, coefficients, degrees);
-        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 0, ATTEMPTS));
+        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 3, ATTEMPTS));
         return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
     }
 
@@ -161,8 +163,7 @@ public class Polynomial {
         Polynomial numerator;
         Polynomial denominator;
 
-        System.out.println(guess - (new Polynomial(gui, coefficients, degrees).getValueAt(guess) / new Polynomial(gui, coefficients, degrees).getDerivative().getValueAt(guess)));
-
+        //System.out.println(attempts);
         if (rootType.getPointName().equals("x-intercept")) {
             numerator = new Polynomial(gui, coefficients, degrees);
             denominator = numerator.getDerivative();
@@ -173,7 +174,6 @@ public class Polynomial {
             numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
             denominator = numerator.getDerivative().getDerivative().getDerivative();
         }
-
         if (attempts == 0 || denominator.getValueAt(guess) == 0) {
             return null;
         } else if (Math.abs((guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))) - guess) <= 0.000001) {

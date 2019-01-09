@@ -20,7 +20,12 @@ public class Point {
     }
 
     public void drawPoint(Graphics2D graphics2D) {
-
+        /*for (int num = 0; num < roots.size() - 1; num++) {
+            Ellipse2D.Double oval1 = new Ellipse2D.Double(400 + roots.get(num) + gui.getMaxDomain() / gui.getDomainStep(), 0, 100, 100);
+            graphics2D.setColor(rootType.getPointColor());
+            graphics2D.fill(oval1);
+            graphics2D.draw(oval1);
+        }*/
     }
 
     @Override
