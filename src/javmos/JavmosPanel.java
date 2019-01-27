@@ -38,8 +38,16 @@ public class JavmosPanel extends JPanel {
         plane = new CartesianPlane(gui);
         plane.drawPlane((Graphics2D) graphics);
         if (polynomialChanged == true) {
+
             polynomial.drawPolynomial((Graphics2D) graphics);
-            System.out.println("hi");
+            points.addAll(polynomial.getRoots(RootType.X_INTERCEPT, gui.getMinDomain(), gui.getMaxDomain()));
+            points.addAll(polynomial.getRoots(RootType.CRITICAL_POINT, gui.getMinDomain(), gui.getMaxDomain()));
+            points.addAll(polynomial.getRoots(RootType.INFLECTION_POINT, gui.getMinDomain(), gui.getMaxDomain()));
+
+            for (int i = 0; i < points.size(); i++) {
+                points.get(i).drawPoint((Graphics2D) graphics);
+            }
+            points.clear();
         }
     }
 }

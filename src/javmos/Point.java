@@ -1,5 +1,6 @@
 package javmos;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.Objects;
@@ -21,12 +22,10 @@ public class Point {
     }
 
     public void drawPoint(Graphics2D graphics2D) {
-        /*for (int num = 0; num < roots.size() - 1; num++) {
-            Ellipse2D.Double oval1 = new Ellipse2D.Double(400 + roots.get(num) + gui.getMaxDomain() / gui.getDomainStep(), 0, 100, 100);
-            graphics2D.setColor(rootType.getPointColor());
-            graphics2D.fill(oval1);
-            graphics2D.draw(oval1);
-        }*/
+        point = new Ellipse2D.Double((gui.getPlaneWidth() / 2) + x * gui.getZoom() / gui.getDomainStep() - 5, (gui.getPlaneWidth() / 2) + y * -gui.getZoom() / gui.getRangeStep() - 5, 10, 10);
+        graphics2D.setStroke(new BasicStroke(10));
+        graphics2D.setColor(rootType.getPointColor());
+        graphics2D.draw(point);
     }
 
     @Override

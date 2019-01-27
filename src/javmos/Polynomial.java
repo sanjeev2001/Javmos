@@ -122,17 +122,20 @@ public class Polynomial {
     public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
         Polynomial function = new Polynomial(gui, coefficients, degrees);
         HashSet<Point> roots = new HashSet<>(function.getDegree());
-        if (rootType.getPointName().equals("x-intercept")) {
-            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
-                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
-            }
-        } else if (rootType.getPointName().equals("Critical Point")) {
-            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
-                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
-            }
-        } else {
-            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
-                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+
+        for (double i = minDomain; i < maxDomain; i += 1) {
+            if (function.newtonsMethod(rootType, i, ATTEMPTS) != null) {
+                switch (rootType.getPointName()) {
+                    case "x-intercept":
+                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
+                        break;
+                    case "Critical Point":
+                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+                        break;
+                    default:
+                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+                        break;
+                }
             }
         }
         return roots;
