@@ -75,7 +75,7 @@ public class Polynomial {
     }
 
     private int getDegree() {
-        int[] temp = degrees;
+        int[] temp = degrees.clone();
         Arrays.sort(temp);
         return temp[temp.length - 1];
     }
@@ -166,16 +166,20 @@ public class Polynomial {
         Polynomial numerator;
         Polynomial denominator;
 
-        //System.out.println(attempts);
-        if (rootType.getPointName().equals("x-intercept")) {
-            numerator = new Polynomial(gui, coefficients, degrees);
-            denominator = numerator.getDerivative();
-        } else if (rootType.getPointName().equals("Critical Point")) {
-            numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
-            denominator = numerator.getDerivative().getDerivative();
-        } else {
-            numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
-            denominator = numerator.getDerivative().getDerivative().getDerivative();
+        //System.out.println(guess - (new Polynomial(gui, coefficients, degrees).getValueAt(guess) / new Polynomial(gui, coefficients, degrees).getDerivative().getValueAt(guess)));
+        switch (rootType.getPointName()) {
+            case "x-intercept":
+                numerator = new Polynomial(gui, coefficients, degrees);
+                denominator = numerator.getDerivative();
+                break;
+            case "Critical Point":
+                numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
+                denominator = numerator.getDerivative().getDerivative();
+                break;
+            default:
+                numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
+                denominator = numerator.getDerivative().getDerivative().getDerivative();
+                break;
         }
         if (attempts == 0 || denominator.getValueAt(guess) == 0) {
             return null;
