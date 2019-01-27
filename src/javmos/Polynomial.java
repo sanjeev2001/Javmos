@@ -2,17 +2,15 @@ package javmos;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import javmos.exceptions.PolynomialException;
 
 public class Polynomial {
 
-    public final int ATTEMPTS = 1000;
+    public final int ATTEMPTS = 500;
     public final double[] coefficients;
     public final int[] degrees;
     public final JavmosGUI gui;
@@ -154,22 +152,21 @@ public class Polynomial {
 
     private Double newtonsMethod(RootType rootType, double guess, int attempts) {
         DecimalFormat thousandth = new DecimalFormat("#.###");
-        Polynomial function = new Polynomial(gui, coefficients, degrees);
         Polynomial numerator;
         Polynomial denominator;
 
         switch (rootType.getPointName()) {
             case "x-intercept":
-                numerator = function;
-                denominator = function.getDerivative();
+                numerator = new Polynomial(gui, coefficients, degrees);
+                denominator = new Polynomial(gui, coefficients, degrees).getDerivative();
                 break;
             case "Critical Point":
-                numerator = function.getDerivative();
-                denominator = function.getDerivative().getDerivative();
+                numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
+                denominator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
                 break;
             default:
-                numerator = function.getDerivative().getDerivative();
-                denominator = function.getDerivative().getDerivative().getDerivative();
+                numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
+                denominator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative().getDerivative();
                 break;
         }
 
