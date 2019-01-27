@@ -2,6 +2,7 @@ package javmos;
 
 import java.awt.BasicStroke;
 import java.awt.Font;
+import java.text.DecimalFormat;
 
 public class CartesianPlane extends java.lang.Object {
 
@@ -15,6 +16,7 @@ public class CartesianPlane extends java.lang.Object {
         int pixel = (int) gui.getZoom();
         double d = gui.getDomainStep();
         double r = gui.getRangeStep();
+        DecimalFormat thousandth = new DecimalFormat("#.###");
         graphics2D.clearRect(0, 0, 800, 800);
         graphics2D.setFont(new Font("TimesRoman", Font.BOLD, 14)); //Sets font size and font type
 
@@ -37,8 +39,8 @@ public class CartesianPlane extends java.lang.Object {
                     graphics2D.drawString(String.valueOf((int) (-i * d)), 405 - pixel * i, 399);
                     graphics2D.drawString(String.valueOf((int) (i * d)), 405 + pixel * i, 399);
                 } else {
-                    graphics2D.drawString(String.valueOf(-i * d), 405 - pixel * i, 399);
-                    graphics2D.drawString(String.valueOf(i * d), 405 + pixel * i, 399);
+                    graphics2D.drawString(String.valueOf(thousandth.format(-i * d)), 405 - pixel * i, 399);
+                    graphics2D.drawString(String.valueOf(thousandth.format(i * d)), 405 + pixel * i, 399);
                 }
 
                 // Draws vertical axis numbers
@@ -46,8 +48,8 @@ public class CartesianPlane extends java.lang.Object {
                     graphics2D.drawString(String.valueOf((int) (-i * r)), 405, 399 + pixel * i);
                     graphics2D.drawString(String.valueOf((int) (i * r)), 405, 399 - pixel * i);
                 } else {
-                    graphics2D.drawString(String.valueOf(-i * r), 405, 399 + pixel * i);
-                    graphics2D.drawString(String.valueOf(i * r), 405, 399 - pixel * i);
+                    graphics2D.drawString(String.valueOf(thousandth.format(-i * r)), 405, 399 + pixel * i);
+                    graphics2D.drawString(String.valueOf(thousandth.format(i * r)), 405, 399 - pixel * i);
                 }
             } else { // Spaces out the axis numbers at 10x so that it's readable
                 graphics2D.drawString(Double.toString(-2 * i * d), 405 - pixel * 2 * i, 399); // Draws negative horizontal axis numbers
