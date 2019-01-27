@@ -140,7 +140,7 @@ public class Polynomial {
 
     public String getSecondDerivative() {
         Polynomial test = new Polynomial(gui, coefficients, degrees);
-        System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 3, ATTEMPTS));
+        //System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 3, ATTEMPTS));
         return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
     }
 

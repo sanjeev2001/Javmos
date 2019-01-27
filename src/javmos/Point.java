@@ -2,6 +2,7 @@ package javmos;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.util.Objects;
 
 public class Point {
 
@@ -30,7 +31,18 @@ public class Point {
 
     @Override
     public boolean equals(Object object) {
-        // Complete me
+        if (object == this) {
+            return true;
+        }
+        if (object == null) {
+            return false;
+        }
+        if (object instanceof Point) {
+            Point test = (Point) object;
+            if (test.gui == this.gui && test.getRootType() == this.rootType && test.getX() == this.x && test.getY() == this.y) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -53,8 +65,12 @@ public class Point {
 
     @Override
     public int hashCode() {
-        // Complete me
-        return 0;
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.gui);
+        hash = 37 * hash + Objects.hashCode(this.rootType);
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
+        return hash;
     }
 
     @Override

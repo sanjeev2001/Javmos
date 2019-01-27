@@ -39,6 +39,7 @@ public class JavmosPanel extends JPanel {
         plane.drawPlane((Graphics2D) graphics);
         if (polynomialChanged == true) {
             polynomial.drawPolynomial((Graphics2D) graphics);
+            System.out.println("hi");
         }
     }
 }
