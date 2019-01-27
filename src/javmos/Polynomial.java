@@ -75,7 +75,7 @@ public class Polynomial {
     }
 
     private int getDegree() {
-        int[] temp = degrees;
+        int[] temp = degrees.clone();
         Arrays.sort(temp);
         return temp[temp.length - 1];
     }
@@ -122,17 +122,20 @@ public class Polynomial {
     public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
         Polynomial function = new Polynomial(gui, coefficients, degrees);
         HashSet<Point> roots = new HashSet<>(function.getDegree());
-        if (rootType.getPointName().equals("x-intercept")) {
-            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
-                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
-            }
-        } else if (rootType.getPointName().equals("Critical Point")) {
-            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
-                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
-            }
-        } else {
-            for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
-                roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+
+        for (double i = minDomain; i < maxDomain; i += 1) {
+            if (function.newtonsMethod(rootType, i, ATTEMPTS) != null) {
+                switch (rootType.getPointName()) {
+                    case "x-intercept":
+                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
+                        break;
+                    case "Critical Point":
+                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+                        break;
+                    default:
+                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
+                        break;
+                }
             }
         }
         return roots;
@@ -163,16 +166,20 @@ public class Polynomial {
         Polynomial numerator;
         Polynomial denominator;
 
-        //System.out.println(attempts);
-        if (rootType.getPointName().equals("x-intercept")) {
-            numerator = new Polynomial(gui, coefficients, degrees);
-            denominator = numerator.getDerivative();
-        } else if (rootType.getPointName().equals("Critical Point")) {
-            numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
-            denominator = numerator.getDerivative().getDerivative();
-        } else {
-            numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
-            denominator = numerator.getDerivative().getDerivative().getDerivative();
+        //System.out.println(guess - (new Polynomial(gui, coefficients, degrees).getValueAt(guess) / new Polynomial(gui, coefficients, degrees).getDerivative().getValueAt(guess)));
+        switch (rootType.getPointName()) {
+            case "x-intercept":
+                numerator = new Polynomial(gui, coefficients, degrees);
+                denominator = numerator.getDerivative();
+                break;
+            case "Critical Point":
+                numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
+                denominator = numerator.getDerivative().getDerivative();
+                break;
+            default:
+                numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
+                denominator = numerator.getDerivative().getDerivative().getDerivative();
+                break;
         }
         if (attempts == 0 || denominator.getValueAt(guess) == 0) {
             return null;
