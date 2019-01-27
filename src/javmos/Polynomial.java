@@ -83,13 +83,12 @@ public class Polynomial {
     public Polynomial getDerivative() {
         int numOfTerms = 0;
         int offset = 0;
+        double[] firstCoefficients = new double[numOfTerms];
+        int[] firstDegrees = new int[numOfTerms];
 
         for (int i = 0; i < degrees.length; i++) {
             numOfTerms += degrees[i] > 0 ? 1 : 0;
         }
-
-        double[] firstCoefficients = new double[numOfTerms];
-        int[] firstDegrees = new int[numOfTerms];
 
         for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 0) {
@@ -115,7 +114,6 @@ public class Polynomial {
                 firstString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i]) : String.valueOf(coefficients[i] * degrees[i]);
             }
         }
-
         return firstString;
     }
 
@@ -125,16 +123,10 @@ public class Polynomial {
 
         for (double i = minDomain; i < maxDomain; i += 1) {
             if (function.newtonsMethod(rootType, i, ATTEMPTS) != null) {
-                switch (rootType.getPointName()) {
-                    case "x-intercept":
-                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
-                        break;
-                    case "Critical Point":
-                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
-                        break;
-                    default:
-                        roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
-                        break;
+                if (rootType.getPointName().equals("x-intercept")) {
+                    roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
+                } else {
+                    roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
                 }
             }
         }
@@ -142,8 +134,6 @@ public class Polynomial {
     }
 
     public String getSecondDerivative() {
-        Polynomial test = new Polynomial(gui, coefficients, degrees);
-        //System.out.println(test.newtonsMethod(RootType.X_INTERCEPT, 3, ATTEMPTS));
         return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
     }
 
@@ -163,24 +153,25 @@ public class Polynomial {
 
     private Double newtonsMethod(RootType rootType, double guess, int attempts) {
         DecimalFormat thousandth = new DecimalFormat("#.###");
+        Polynomial function = new Polynomial(gui, coefficients, degrees);
         Polynomial numerator;
         Polynomial denominator;
 
-        //System.out.println(guess - (new Polynomial(gui, coefficients, degrees).getValueAt(guess) / new Polynomial(gui, coefficients, degrees).getDerivative().getValueAt(guess)));
         switch (rootType.getPointName()) {
             case "x-intercept":
-                numerator = new Polynomial(gui, coefficients, degrees);
-                denominator = numerator.getDerivative();
+                numerator = function;
+                denominator = function.getDerivative();
                 break;
             case "Critical Point":
-                numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
-                denominator = numerator.getDerivative().getDerivative();
+                numerator = function.getDerivative();
+                denominator = function.getDerivative().getDerivative();
                 break;
             default:
-                numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
-                denominator = numerator.getDerivative().getDerivative().getDerivative();
+                numerator = function.getDerivative().getDerivative();
+                denominator = function.getDerivative().getDerivative().getDerivative();
                 break;
         }
+
         if (attempts == 0 || denominator.getValueAt(guess) == 0) {
             return null;
         } else if (Math.abs((guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))) - guess) <= 0.000001) {
