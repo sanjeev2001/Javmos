@@ -50,7 +50,6 @@ public class Point {
     }
 
     public RootType getRootType() {
-        // Complete me
         return rootType;
     }
 
@@ -74,7 +73,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return rootType.name + "(" + String.valueOf(x) + "," + String.valueOf(y) + ")";
+        return rootType.name + ": (" + String.valueOf(x) + "," + String.valueOf(y) + ")";
     }
 
 }
