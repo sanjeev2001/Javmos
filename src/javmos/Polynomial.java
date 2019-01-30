@@ -10,7 +10,7 @@ import javmos.exceptions.PolynomialException;
 
 public class Polynomial {
 
-    public final int ATTEMPTS = 500;
+    public final int ATTEMPTS = 150;
     public final double[] coefficients;
     public final int[] degrees;
     public final JavmosGUI gui;
@@ -146,7 +146,6 @@ public class Polynomial {
                 ans += coefficients[i];
             }
         }
-
         return ans;
     }
 
