@@ -99,9 +99,9 @@ public final class JavmosGUI {
         // Configure the control panel
         controlPanel.setPreferredSize(new Dimension(CONTROL_PANEL_WIDTH, CONTROL_PANEL_HEIGHT));
         // Configure control panel's components
-        configureComponent(equationField, CONTROL_PANEL_WIDTH, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 20, drawListener, "", Color.LIGHT_GRAY, Color.GREEN);
+        configureComponent(equationField, CONTROL_PANEL_WIDTH, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 20, drawListener, "", Color.LIGHT_GRAY, Color.BLACK);
         configureComponent(firstDerivativeLabel, CONTROL_PANEL_WIDTH, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 20, null, "", displayBackgroundColor, Color.RED);
-        configureComponent(secondDerivativeLabel, CONTROL_PANEL_WIDTH, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 20, null, "", displayBackgroundColor, Color.BLUE);
+        configureComponent(secondDerivativeLabel, CONTROL_PANEL_WIDTH, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 20, null, "", displayBackgroundColor, Color.ORANGE);
         configureComponent(zoomOutButton, CONTROL_PANEL_WIDTH / 3, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 20, zoomListener, "-", displayBackgroundColor, displayForegroundColor);
         configureComponent(zoomLabel, CONTROL_PANEL_WIDTH / 3, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 25, null, "", displayBackgroundColor, displayForegroundColor);
         configureComponent(zoomInButton, CONTROL_PANEL_WIDTH / 3, CONTROL_PANEL_HEIGHT / CONTROL_PANEL_ITEMS, Color.WHITE, 20, zoomListener, "+", displayBackgroundColor, displayForegroundColor);
