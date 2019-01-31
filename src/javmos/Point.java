@@ -22,10 +22,12 @@ public class Point {
     }
 
     public void drawPoint(Graphics2D graphics2D) {
-        point = new Ellipse2D.Double((gui.getPlaneWidth() / 2) + x * gui.getZoom() / gui.getDomainStep() - 5, (gui.getPlaneWidth() / 2) + y * -gui.getZoom() / gui.getRangeStep() - 5, 10, 10);
-        graphics2D.setStroke(new BasicStroke(10));
-        graphics2D.setColor(rootType.getPointColor());
-        graphics2D.draw(point);
+        if (x > gui.getMinDomain() && x < gui.getMaxDomain() && y > gui.getMinRange() && y < gui.getMaxRange()) {
+            point = new Ellipse2D.Double((gui.getPlaneWidth() / 2) + x * gui.getZoom() / gui.getDomainStep() - 5, (gui.getPlaneWidth() / 2) + y * -gui.getZoom() / gui.getRangeStep() - 5, 10, 10);
+            graphics2D.setStroke(new BasicStroke(10));
+            graphics2D.setColor(rootType.getPointColor());
+            graphics2D.draw(point);
+        }
     }
 
     @Override
