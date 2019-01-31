@@ -33,9 +33,9 @@ public class JavmosPanel extends JPanel {
         this.polynomial = polynomial;
         polynomialChanged = true;
         points.clear();
-        points.addAll(polynomial.getRoots(RootType.X_INTERCEPT, gui.getMinDomain(), gui.getMaxDomain()));
-        points.addAll(polynomial.getRoots(RootType.CRITICAL_POINT, gui.getMinDomain(), gui.getMaxDomain()));
-        points.addAll(polynomial.getRoots(RootType.INFLECTION_POINT, gui.getMinDomain(), gui.getMaxDomain()));
+        points.addAll(polynomial.getRoots(RootType.X_INTERCEPT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
+        points.addAll(polynomial.getRoots(RootType.CRITICAL_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
+        points.addAll(polynomial.getRoots(RootType.INFLECTION_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
         PointClickListener pc = new PointClickListener(gui);
         pc.setPoints(points);
         this.addMouseListener(pc);
