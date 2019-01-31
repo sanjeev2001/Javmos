@@ -20,34 +20,34 @@ public class Polynomial {
         try {
             this.gui = gui;
             this.polynomial = polynomial;
-            polynomial = polynomial.contains("=") ? polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : polynomial;
-            String[] terms = polynomial.charAt(0) == '-' ? polynomial.substring(1, polynomial.length()).split("\\+|\\-") : polynomial.split("\\+|\\-");
-            coefficients = new double[terms.length];
-            degrees = new int[terms.length];
+            polynomial = polynomial.contains("=") ? polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : polynomial; //if an = sign exists evrything after it is taken as the polynomial otherwise polynomial is taken by itself
+            String[] terms = polynomial.charAt(0) == '-' ? polynomial.substring(1, polynomial.length()).split("\\+|\\-") : polynomial.split("\\+|\\-"); //# of terms is equal to the length of an array that splits the + and - signs from polynomial
+            coefficients = new double[terms.length]; //# of coeffs = number of total terms
+            degrees = new int[terms.length]; //# of degrees = number of total terms
             int termsStart = 0;
 
+            //run a for loop to anazlyze each terms individually to retrieve coeffs and degrees 
             for (int i = 0; i < terms.length; i++) {
                 if (terms[i].contains("x^")) {
                     if (terms[i].substring(0, 2).equals("x^")) {
-                        coefficients[i] = 1;
+                        coefficients[i] = 1; //if a term beings with x, coeff = 1
                     } else {
-                        coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
+                        coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x"))); //take everything before the x as coeff
                     }
-                    degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length()));
+                    degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length())); //take everything after the ^ as degree
                 } else if (terms[i].contains("x") && !terms[i].contains("^")) {
-                    coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
-                    degrees[i] = 1;
+                    coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x"))); //if length of term is 1 then coeff must be 1, otherwise everything before the x is taken as coeff
+                    degrees[i] = 1; //degree must be 1
                 } else {
-                    coefficients[i] = Double.parseDouble(terms[i]);
-                    degrees[i] = 0;
+                    coefficients[i] = Double.parseDouble(terms[i]); //non x term therefore entire terms is parsed
+                    degrees[i] = 0; //non x term therefore degree = 0
                 }
-
-                coefficients[i] *= (polynomial.contains("-") && polynomial.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1;
-                termsStart += i == 0 && !(polynomial.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1;
+                coefficients[i] *= (polynomial.contains("-") && polynomial.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1; //if a - exists in the polynomial and the first character of ther terms is -, multiply coeffeicient by -1
+                termsStart += i == 0 && !(polynomial.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1; //used to refernce where each term begins relative to the entire polynomial string
             }
 
         } catch (Exception exception) {
-            throw new PolynomialException(polynomial + " is not a valid polynomial!");
+            throw new PolynomialException(polynomial + " is not a valid polynomial!"); //polynomial entered is invalid anytime any exception is caught
         }
     }
 
@@ -120,7 +120,7 @@ public class Polynomial {
         Polynomial function = new Polynomial(gui, coefficients, degrees);
         HashSet<Point> roots = new HashSet<>(function.getDegree());
 
-        for (double i = minDomain; i < maxDomain; i += 1) {
+        for (double i = minDomain; i < maxDomain; i += 0.1) {
             if (function.newtonsMethod(rootType, i, ATTEMPTS) != null) {
                 if (rootType.getPointName().equals("x-intercept")) {
                     roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
