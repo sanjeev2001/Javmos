@@ -85,12 +85,13 @@ public class Polynomial {
         int offset = 0;
 
         for (int i = 0; i < degrees.length; i++) {
-            numOfTerms += degrees[i] > 0 ? 1 : 0;
+            numOfTerms += degrees[i] > 0 ? 1 : 0; //# of terms = degrees of f(x) that are > 0 due to d/dx of constants being 0
         }
 
         double[] firstCoefficients = new double[numOfTerms];
         int[] firstDegrees = new int[numOfTerms];
 
+        //Applies power rule to every term if degree < 0 terms must be constant therefore it is skipped and added as an offset to compensate for index
         for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 0) {
                 firstCoefficients[i - offset] = coefficients[i] * degrees[i];
@@ -108,6 +109,7 @@ public class Polynomial {
 
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
+        //Applies power rule to every term
         for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 1) {
                 firstString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1) : String.valueOf(coefficients[i] * degrees[i]) + "x" + (degrees[i] - 1 == 1 ? "" : "^") + String.valueOf(degrees[i] - 1 == 1 ? "" : degrees[i] - 1);
@@ -121,7 +123,7 @@ public class Polynomial {
     public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
         Polynomial function = new Polynomial(gui, coefficients, degrees);
         HashSet<Point> roots = new HashSet<>(function.getDegree());
-
+        //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points
         for (double i = minDomain; i < maxDomain; i += 0.1) {
             if (function.newtonsMethod(rootType, i, ATTEMPTS) != null) {
                 if (rootType.getPointName().equals("x-intercept")) {
@@ -156,6 +158,7 @@ public class Polynomial {
         Polynomial numerator;
         Polynomial denominator;
 
+        //Based on the rootType parameter f(x) (numerator) and f'(x) (denominator) are determined
         switch (rootType.getPointName()) {
             case "x-intercept":
                 numerator = new Polynomial(gui, coefficients, degrees);
