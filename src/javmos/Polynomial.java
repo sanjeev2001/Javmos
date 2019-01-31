@@ -67,8 +67,8 @@ public class Polynomial {
                 double x2 = (i + 0.01) * gui.getZoom() / gui.getDomainStep();
                 double y2 = getValueAt(i + 0.01) * gui.getZoom() / gui.getRangeStep();
                 graphics2D.setStroke(new BasicStroke(3));
-                //400 added to x1 and x2 in order to start drawing from the origin 
-                //y1 and y2 are subtracted from 400 in order to start drawing from the origin 
+                /*400 added to x1 and x2 in order to start drawing from the origin 
+                y1 and y2 are subtracted from 400 in order to start drawing from the origin */
                 graphics2D.draw(new Line2D.Double(400 + x1, 400 -  y1, 400 +  x2, 400 -  y2));
             }
         }
