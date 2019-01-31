@@ -30,6 +30,7 @@ public class Point {
 
     @Override
     public boolean equals(Object object) {
+        //the default equals method must be rewritten due to Point being a user defined object therefore this method is used to inform Java of how to differentiate between two Point objects
         if (object == this) {
             return true;
         }
@@ -63,6 +64,7 @@ public class Point {
 
     @Override
     public int hashCode() {
+        //the default hashCode method muse be rewritten due to Point being a user defined object therefore this method is used to create identical hashcodes if a Point object has the same parameters
         int hash = 7;
         hash = 37 * hash + Objects.hashCode(this.gui);
         hash = 37 * hash + Objects.hashCode(this.rootType);
