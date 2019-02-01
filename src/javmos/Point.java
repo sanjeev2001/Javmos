@@ -24,7 +24,9 @@ public class Point {
 
     public void drawPoint(Graphics2D graphics2D) {
         if (x > gui.getMinDomain() && x < gui.getMaxDomain() && y > gui.getMinRange() && y < gui.getMaxRange()) {
+            //Only draws when the point is within the min and max domain and range
             point = new Ellipse2D.Double((gui.getPlaneWidth() / 2) + x * gui.getZoom() / gui.getDomainStep() - 5, (gui.getPlaneWidth() / 2) + y * -gui.getZoom() / gui.getRangeStep() - 5, 10, 10);
+            //Creates an ellipse that represents the points that are drawn on the grid
             graphics2D.setStroke(new BasicStroke(10));
             graphics2D.setColor(rootType.getPointColor());
             graphics2D.draw(point);
@@ -67,7 +69,7 @@ public class Point {
 
     @Override
     public int hashCode() {
-        //the default hashCode method muse be rewritten du`e to Point being a user defined object therefore this method is used to create identical hashcodes if a Point object has the same parameters
+        //the default hashCode method must be rewritten due to Point being a user defined object therefore this method is used to create identical hashcodes if a Point object has the same parameters
         int hash = 7;
         hash = 37 * hash + Objects.hashCode(this.gui);
         hash = 37 * hash + Objects.hashCode(this.rootType);
