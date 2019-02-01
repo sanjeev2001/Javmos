@@ -14,7 +14,7 @@ public enum RootType {
         this.color = color;
         this.name = name;
     }
-    
+
     public Color getPointColor() {
         return color;
     }
