@@ -32,27 +32,27 @@ public class JavmosPanel extends JPanel {
     public void setPolynomial(Polynomial polynomial) {
         this.polynomial = polynomial;
         polynomialChanged = true;
-        points.clear();
+        points.clear(); //Clears the list so that points that were added from previous polynomials are no longer included
+        //points are only added within viewable domain
         points.addAll(polynomial.getRoots(RootType.X_INTERCEPT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
         points.addAll(polynomial.getRoots(RootType.CRITICAL_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
         points.addAll(polynomial.getRoots(RootType.INFLECTION_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
-        PointClickListener pc = new PointClickListener(gui);
-        pc.setPoints(points);
-        this.addMouseListener(pc);
+        //Adds all the points to the list
+        PointClickListener clickListener = new PointClickListener(gui);
+        clickListener.setPoints(points);
+        this.addMouseListener(clickListener); //Adds a listener to each point so that they can be clicked
     }
 
     @Override
     public void paintComponent(Graphics graphics) {
         plane = new CartesianPlane(gui);
-        plane.drawPlane((Graphics2D) graphics);
-        if (polynomialChanged == true) {
+        plane.drawPlane((Graphics2D) graphics); //Draws the cartesian plane
+        if (polynomialChanged == true) { //Only attempts to draw polynomial and points after a polynomial is entered
+            polynomial.drawPolynomial((Graphics2D) graphics);//Draws the polynomial
             setPolynomial(polynomial);
-            polynomial.drawPolynomial((Graphics2D) graphics);
-            
             for (int i = 0; i < points.size(); i++) {
-                points.get(i).drawPoint((Graphics2D) graphics);
+                points.get(i).drawPoint((Graphics2D) graphics); //Draws all the points that are in the list  
             }
-            
         }
     }
 }
