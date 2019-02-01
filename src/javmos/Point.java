@@ -3,6 +3,7 @@ package javmos;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class Point {
@@ -66,7 +67,7 @@ public class Point {
 
     @Override
     public int hashCode() {
-        //the default hashCode method muse be rewritten due to Point being a user defined object therefore this method is used to create identical hashcodes if a Point object has the same parameters
+        //the default hashCode method muse be rewritten du`e to Point being a user defined object therefore this method is used to create identical hashcodes if a Point object has the same parameters
         int hash = 7;
         hash = 37 * hash + Objects.hashCode(this.gui);
         hash = 37 * hash + Objects.hashCode(this.rootType);
@@ -77,7 +78,8 @@ public class Point {
 
     @Override
     public String toString() {
-        return rootType.name + ": (" + String.valueOf(x) + "," + String.valueOf(y) + ")";
+        DecimalFormat thousandth = new DecimalFormat("#.###");
+        return rootType.name + ": (" + String.valueOf(thousandth.format(x)) + "," + String.valueOf(thousandth.format(y)) + ")";
     }
 
 }
