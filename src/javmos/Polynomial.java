@@ -69,7 +69,7 @@ public class Polynomial {
                 graphics2D.setStroke(new BasicStroke(3));
                 /*400 added to x1 and x2 in order to start drawing from the origin 
                 y1 and y2 are subtracted from 400 in order to start drawing from the origin */
-                graphics2D.draw(new Line2D.Double(400 + x1, 400 -  y1, 400 +  x2, 400 -  y2));
+                graphics2D.draw(new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2));
             }
         }
     }
@@ -143,6 +143,8 @@ public class Polynomial {
     private double getValueAt(double x) {
         double ans = 0.0;
 
+        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent
+        otherwise term is constant either term types are added to a total value */
         for (int i = 0; i < coefficients.length; i++) {
             if (degrees[i] > 0) {
                 ans += coefficients[i] * Math.pow(x, degrees[i]);
@@ -174,6 +176,7 @@ public class Polynomial {
                 break;
         }
 
+        //null is returned if Newtons method is undefined, if new value - old value = 0.000001 a point has been converged on otherwise Newtons method is run again with new guess
         if (attempts == 0 || denominator.getValueAt(guess) == 0) {
             return null;
         } else if (Math.abs((guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))) - guess) <= 0.000001) {
