@@ -23,13 +23,11 @@ public class Point {
     }
 
     public void drawPoint(Graphics2D graphics2D) {
-        if (x > gui.getMinDomain() && x < gui.getMaxDomain() && y > gui.getMinRange() && y < gui.getMaxRange()) {
-            //Only draws when the point is within the min and max domain and range
-            point = new Ellipse2D.Double((gui.getPlaneWidth() / 2) + x * gui.getZoom() / gui.getDomainStep() - 5, (gui.getPlaneWidth() / 2) + y * -gui.getZoom() / gui.getRangeStep() - 5, 10, 10);
-            //Creates an ellipse that represents the points that are drawn on the grid
-            graphics2D.setStroke(new BasicStroke(10));
+        //Only draws when the point is within the min and max domain and range
+        if (x > this.gui.getMinDomain() && x < this.gui.getMaxDomain() && y > this.gui.getMinRange() && y < this.gui.getMaxRange()) {
+            graphics2D.setStroke(new BasicStroke(8));
             graphics2D.setColor(rootType.getPointColor());
-            graphics2D.draw(point);
+            graphics2D.draw(getPoint());
         }
     }
 
@@ -52,7 +50,8 @@ public class Point {
     }
 
     public Ellipse2D.Double getPoint() {
-        return point;
+        //Creates an ellipse that represents the points that are drawn on the grid
+        return new Ellipse2D.Double((gui.getPlaneWidth() / 2) + x * gui.getZoom() / gui.getDomainStep() - 4, (gui.getPlaneWidth() / 2) + y * -gui.getZoom() / gui.getRangeStep() - 4, 8, 8);
     }
 
     public RootType getRootType() {
