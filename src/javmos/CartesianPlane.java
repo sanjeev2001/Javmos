@@ -34,6 +34,7 @@ public class CartesianPlane extends java.lang.Object {
             graphics2D.drawLine(395, 400 - pixel * i, 405, 400 - pixel * i);//Draws axis tick marks
             graphics2D.drawLine(400 + pixel * i, 395, 400 + pixel * i, 405); //Draws axis tick marks
             graphics2D.drawLine(395, 400 + pixel * i, 405, 400 + pixel * i);//Draws axis tick marks
+
             //Draws horizontal axis numbers
             if ((gui.getDomainStep() % 1) == 0) {
                 graphics2D.drawString(String.valueOf((int) (-i * d * scaleFactor)), 405 - pixel * i * scaleFactor, 399);
