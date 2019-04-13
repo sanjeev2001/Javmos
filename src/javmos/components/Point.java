@@ -1,14 +1,15 @@
-package javmos;
+package javmos.components;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.text.DecimalFormat;
 import java.util.Objects;
+import javmos.JavmosGUI;
+import javmos.enums.RootType;
 
-public class Point {
+public class Point extends JavmosComponent{
 
-    public final JavmosGUI gui;
     public Ellipse2D.Double point;
     public final int RADIUS = 5;
     public final RootType rootType;
@@ -16,17 +17,17 @@ public class Point {
     public double y;
 
     public Point(JavmosGUI gui, RootType type, double x, double y) {
-        this.gui = gui;
+        super(gui);
         this.rootType = type;
         this.x = x;
         this.y = y;
     }
 
-    public void drawPoint(Graphics2D graphics2D) {
+    public void draw(Graphics2D graphics2D) {
         //Only draws when the point is within the min and max domain and range
         if (x > this.gui.getMinDomain() && x < this.gui.getMaxDomain() && y > this.gui.getMinRange() && y < this.gui.getMaxRange()) {
             graphics2D.setStroke(new BasicStroke(8));
-            graphics2D.setColor(rootType.getPointColor());
+            graphics2D.setColor(rootType.getRootColor());
             graphics2D.draw(getPoint());
         }
     }
@@ -80,7 +81,7 @@ public class Point {
     @Override
     public String toString() {
         DecimalFormat thousandth = new DecimalFormat("#.###");
-        return rootType.name + ": (" + String.valueOf(thousandth.format(x)) + "," + String.valueOf(thousandth.format(y)) + ")";
+        return rootType.rootName + ": (" + String.valueOf(thousandth.format(x)) + "," + String.valueOf(thousandth.format(y)) + ")";
     }
 
 }

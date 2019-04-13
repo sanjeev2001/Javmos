@@ -1,5 +1,7 @@
 package javmos;
 
+import javmos.enums.RootType;
+import javmos.components.JavmosPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -212,7 +214,7 @@ public final class JavmosGUI {
     }
 
     public void setPointLabel(String pointLabel, RootType rootType) {
-        this.pointLabel.setForeground(rootType.getPointColor());
+        this.pointLabel.setForeground(rootType.getRootColor());
         this.pointLabel.setText(pointLabel);
     }
 

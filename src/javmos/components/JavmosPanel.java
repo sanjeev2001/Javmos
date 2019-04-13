@@ -1,12 +1,14 @@
-package javmos;
+package javmos.components;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
-import javax.swing.JPanel;
+import javmos.JavmosGUI;
+import javmos.components.functions.Polynomial;
+import javmos.enums.RootType;
 import javmos.listeners.PointClickListener;
 
-public class JavmosPanel extends JPanel {
+public class JavmosPanel extends javax.swing.JPanel {
 
     private final JavmosGUI gui;
     private CartesianPlane plane;
@@ -34,9 +36,9 @@ public class JavmosPanel extends JPanel {
         polynomialChanged = true;
         points.clear(); //Clears the list so that points that were added from previous polynomials are no longer included
         //points are only added within viewable domain
-        points.addAll(polynomial.getRoots(RootType.X_INTERCEPT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
-        points.addAll(polynomial.getRoots(RootType.CRITICAL_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
-        points.addAll(polynomial.getRoots(RootType.INFLECTION_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
+        //points.addAll(polynomial.getRoots(RootType.X_INTERCEPT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
+        //points.addAll(polynomial.getRoots(RootType.CRITICAL_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
+        //points.addAll(polynomial.getRoots(RootType.INFLECTION_POINT, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep()));
         //Adds all the points to the list
         PointClickListener clickListener = new PointClickListener(gui);
         clickListener.setPoints(points);
@@ -46,12 +48,12 @@ public class JavmosPanel extends JPanel {
     @Override
     public void paintComponent(Graphics graphics) {
         plane = new CartesianPlane(gui);
-        plane.drawPlane((Graphics2D) graphics); //Draws the cartesian plane
+        plane.draw((Graphics2D) graphics); //Draws the cartesian plane
         if (polynomialChanged == true) { //Only attempts to draw polynomial and points after a polynomial is entered
-            polynomial.drawPolynomial((Graphics2D) graphics);//Draws the polynomial
+            //polynomial.drawPolynomial((Graphics2D) graphics);//Draws the polynomial
             setPolynomial(polynomial);
             for (int i = 0; i < points.size(); i++) {
-                points.get(i).drawPoint((Graphics2D) graphics); //Draws all the points that are in the list  
+                points.get(i).draw((Graphics2D) graphics); //Draws all the points that are in the list  
             }
         }
     }

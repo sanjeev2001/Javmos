@@ -1,18 +1,17 @@
-package javmos;
+package javmos.components;
 
 import java.awt.BasicStroke;
 import java.awt.Font;
 import java.text.DecimalFormat;
+import javmos.JavmosGUI;
 
-public class CartesianPlane extends java.lang.Object {
-
-    public final JavmosGUI gui;
+public class CartesianPlane extends JavmosComponent {
 
     public CartesianPlane(JavmosGUI gui) {
-        this.gui = gui;
+        super(gui);
     }
 
-    public void drawPlane(java.awt.Graphics2D graphics2D) {
+    public void draw(java.awt.Graphics2D graphics2D) {
         int pixel = (int) gui.getZoom();
         int scaleFactor = gui.getZoom() == 10 ? 2 : 1;
         double d = gui.getDomainStep();

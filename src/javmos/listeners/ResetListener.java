@@ -3,7 +3,7 @@ package javmos.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javmos.JavmosGUI;
-import javmos.JavmosPanel;
+import javmos.components.JavmosPanel;
 
 public class ResetListener implements ActionListener {
 

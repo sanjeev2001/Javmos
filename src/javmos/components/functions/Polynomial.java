@@ -1,27 +1,21 @@
-package javmos;
+package javmos.components.functions;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.HashSet;
+import javmos.JavmosGUI;
 import javmos.exceptions.PolynomialException;
 
-public class Polynomial {
 
-    public final int ATTEMPTS = 150;
+public final class Polynomial extends Function{
+
+    
     public final double[] coefficients;
     public final int[] degrees;
-    public final JavmosGUI gui;
-    public final String polynomial;
 
-    public Polynomial(JavmosGUI gui, String polynomial) throws PolynomialException {
+    public Polynomial(JavmosGUI gui, String function) throws PolynomialException {
+        super(gui);
         try {
-            this.gui = gui;
-            this.polynomial = polynomial;
-            polynomial = polynomial.contains("=") ? polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : polynomial; //if an = sign exists evrything after it is taken as the polynomial otherwise polynomial is taken by itself
-            String[] terms = polynomial.charAt(0) == '-' ? polynomial.substring(1, polynomial.length()).split("\\+|\\-") : polynomial.split("\\+|\\-"); //# of terms is equal to the length of an array that splits the + and - signs from polynomial
+            function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function; //if an = sign exists evrything after it is taken as the polynomial otherwise polynomial is taken by itself
+            String[] terms = function.charAt(0) == '-' ? function.substring(1, function.length()).split("\\+|\\-") : function.split("\\+|\\-"); //# of terms is equal to the length of an array that splits the + and - signs from polynomial
             coefficients = new double[terms.length]; //# of coeffs = number of total terms
             degrees = new int[terms.length]; //# of degrees = number of total terms
             int termsStart = 0;
@@ -42,23 +36,17 @@ public class Polynomial {
                     coefficients[i] = Double.parseDouble(terms[i]); //non x term therefore entire terms is parsed
                     degrees[i] = 0; //non x term therefore degree = 0
                 }
-                coefficients[i] *= (polynomial.contains("-") && polynomial.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1; //if a - exists in the polynomial and the first character of ther terms is -, multiply coeffeicient by -1
-                termsStart += i == 0 && !(polynomial.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1; //used to refernce where each term begins relative to the entire polynomial string
+                coefficients[i] *= (function.contains("-") && function.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1; //if a - exists in the polynomial and the first character of ther terms is -, multiply coeffeicient by -1
+                termsStart += i == 0 && !(function.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1; //used to refernce where each term begins relative to the entire polynomial string
             }
 
         } catch (Exception exception) {
-            throw new PolynomialException(polynomial + " is not a valid polynomial!"); //polynomial entered is invalid anytime any exception is caught
+            throw new PolynomialException(function + " is not a valid polynomial!"); //polynomial entered is invalid anytime any exception is caught
         }
     }
 
-    public Polynomial(JavmosGUI gui, double[] coefficients, int[] degrees) {
-        this.gui = gui;
-        this.coefficients = coefficients;
-        this.degrees = degrees;
-        this.polynomial = "";
-    }
 
-    public void drawPolynomial(Graphics2D graphics2D) {
+    /*public void drawPolynomial(Graphics2D graphics2D) {
         //this method draws very short lines at very small increments so that when they connect together, they form a much larger line
         for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.01) {
             if (getValueAt(i) <= gui.getMaxRange() && getValueAt(i) >= gui.getMinRange()) {//only draws within the given max and min range
@@ -68,19 +56,19 @@ public class Polynomial {
                 double y2 = getValueAt(i + 0.01) * gui.getZoom() / gui.getRangeStep();
                 graphics2D.setStroke(new BasicStroke(3));
                 /*400 added to x1 and x2 in order to start drawing from the origin 
-                y1 and y2 are subtracted from 400 in order to start drawing from the origin */
+                y1 and y2 are subtracted from 400 in order to start drawing from the origin 
                 graphics2D.draw(new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2));
             }
         }
-    }
+    }*/
 
-    private int getDegree() {
+    /*private int getDegree() {
         int[] temp = degrees.clone();
         Arrays.sort(temp);
         return temp[temp.length - 1];
-    }
+    }*/
 
-    public Polynomial getDerivative() {
+    /*public Polynomial getDerivative() {
         int numOfTerms = 0;
         int offset = 0;
 
@@ -101,11 +89,11 @@ public class Polynomial {
             }
         }
         return new Polynomial(gui, firstCoefficients, firstDegrees);
-    }
+    }*/
 
-    public String getEquation() {
+    /*public String getEquation() {
         return polynomial.contains("=") ? "f(x)=" + polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : "f(x)=" + polynomial;
-    }
+    }*/
 
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
@@ -120,13 +108,13 @@ public class Polynomial {
         return firstString;
     }
 
-    public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
+    /*public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
         Polynomial function = new Polynomial(gui, coefficients, degrees);
         HashSet<Point> roots = new HashSet<>(function.getDegree());
         //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points
         for (double i = minDomain; i < maxDomain; i += 0.1) {
             if (function.newtonsMethod(rootType, i, ATTEMPTS) != null) {
-                if (rootType.getPointName().equals("x-intercept")) {
+                if (rootType.getRootName().equals("x-intercept")) {
                     roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
                 } else {
                     roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
@@ -134,10 +122,10 @@ public class Polynomial {
             }
         }
         return roots;
-    }
+    }*/
 
     public String getSecondDerivative() {
-        return "f''(x)=" + (new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative()).substring(6, new Polynomial(gui, coefficients, degrees).getDerivative().getFirstDerivative().length());
+        return null;//new Polynomial(gui, getFirstDerivative()).getFirstDerivative();
     }
 
     private double getValueAt(double x) {
@@ -155,34 +143,12 @@ public class Polynomial {
         return ans;
     }
 
-    private Double newtonsMethod(RootType rootType, double guess, int attempts) {
-        DecimalFormat thousandth = new DecimalFormat("#.###");
-        Polynomial numerator;
-        Polynomial denominator;
-
-        //Based on the rootType parameter f(x) (numerator) and f'(x) (denominator) are determined
-        switch (rootType.getPointName()) {
-            case "x-intercept":
-                numerator = new Polynomial(gui, coefficients, degrees);
-                denominator = new Polynomial(gui, coefficients, degrees).getDerivative();
-                break;
-            case "Critical Point":
-                numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
-                denominator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
-                break;
-            default:
-                numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
-                denominator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative().getDerivative();
-                break;
-        }
-
-        //null is returned if Newtons method is undefined, if new value - old value = 0.000001 a point has been converged on otherwise Newtons method is run again with new guess
-        if (attempts == 0 || denominator.getValueAt(guess) == 0) {
-            return null;
-        } else if (Math.abs((guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))) - guess) <= 0.000001) {
-            return Double.parseDouble(thousandth.format(guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess))));
-        } else {
-            return newtonsMethod(rootType, guess - (numerator.getValueAt(guess) / denominator.getValueAt(guess)), attempts - 1);
-        }
+    @Override
+    public void draw(Graphics2D graphics2D) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
+
+    
 }

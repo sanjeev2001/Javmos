@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import javmos.JavmosGUI;
-import javmos.Point;
+import javmos.components.Point;
 
 public class PointClickListener implements MouseListener {
 

@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javmos.JavmosGUI;
-import javmos.JavmosPanel;
-import javmos.Polynomial;
+import javmos.components.JavmosPanel;
+import javmos.components.functions.Polynomial;
 import javmos.exceptions.PolynomialException;
 
 public class DrawListener implements ActionListener {
