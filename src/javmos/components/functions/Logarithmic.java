@@ -7,6 +7,7 @@ package javmos.components.functions;
 
 import java.awt.Graphics2D;
 import javmos.JavmosGUI;
+import javmos.enums.FunctionType;
 
 
 /**
@@ -20,5 +21,10 @@ public class Logarithmic extends Function {
 
    public Logarithmic(JavmosGUI gui, String function){
        super(gui);
-   }
+    }
+
+    @Override
+    public double getValueAt(double x, FunctionType functionType) {
+        return 0.0;
+    }
 }

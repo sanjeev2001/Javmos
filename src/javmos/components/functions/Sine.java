@@ -5,6 +5,8 @@
  */
 package javmos.components.functions;
 
+import javmos.enums.FunctionType;
+
 /**
  *
  * @author user
@@ -12,5 +14,10 @@ package javmos.components.functions;
 public final class Sine extends Trigonometric{
     public Sine(javmos.JavmosGUI gui,  String function) {
         super(gui, function, "sin");
+    }
+
+    @Override
+    public double getValueAt(double x, FunctionType functionType) {
+        return 0.0;
     }
 }

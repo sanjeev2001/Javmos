@@ -5,6 +5,7 @@
  */
 package javmos.components.functions;
 import javmos.JavmosGUI;
+import javmos.enums.FunctionType;
 
 /**
  *
@@ -16,5 +17,9 @@ public final class Cosine extends Trigonometric    {
         super(gui, function, "cos");
     }
 
+    @Override
+    public double getValueAt(double x, FunctionType functionType) {
+        return 0.0;
+    }
     
 }

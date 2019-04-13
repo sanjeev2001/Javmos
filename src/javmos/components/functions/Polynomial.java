@@ -2,6 +2,7 @@ package javmos.components.functions;
 
 import java.awt.Graphics2D;
 import javmos.JavmosGUI;
+import javmos.enums.FunctionType;
 import javmos.exceptions.PolynomialException;
 
 
@@ -128,7 +129,7 @@ public final class Polynomial extends Function{
         return null;//new Polynomial(gui, getFirstDerivative()).getFirstDerivative();
     }
 
-    private double getValueAt(double x) {
+    public double getValueAt(double x, FunctionType functionType) {
         double ans = 0.0;
 
         /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent
