@@ -5,6 +5,7 @@
  */
 package javmos.components.functions;
 
+import javmos.components.Point;
 import javmos.enums.FunctionType;
 
 /**
@@ -14,6 +15,18 @@ import javmos.enums.FunctionType;
 public final class Tangent extends Trigonometric{
     public Tangent(javmos.JavmosGUI gui,  String function) {
         super(gui, function, "tan");
+    }
+    
+    public java.lang.String getFirstDerivative() {
+        return "f'(x) = " + a * k + "sec^2(" + k + "x)";
+    }
+    
+    public java.lang.String getSecondDerivative() {
+        return "f''(x) = " + 2 * a * Math.pow(k, 2) + "sec^2(" + k + "x) * tan(" + k + "x)";
+    }
+    
+    public java.util.HashSet<Point> getCriticalPoints() {
+        return null;
     }
 
     @Override
