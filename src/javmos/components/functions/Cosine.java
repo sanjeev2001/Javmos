@@ -16,6 +16,14 @@ public final class Cosine extends Trigonometric    {
     public Cosine(JavmosGUI gui,  String function) {
         super(gui, function, "cos");
     }
+    
+    public java.lang.String getFirstDerivative() {
+        return "f'(x) = " + -a * k + "sin(" + k + "x)";
+    }
+    
+    public java.lang.String getSecondDerivative() {
+        return "f''(x) = " + a * Math.pow(k,2) + "cos(" + k + "x)";
+    }
 
     @Override
     public double getValueAt(double x, FunctionType functionType) {
