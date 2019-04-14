@@ -20,13 +20,23 @@ public final class Sine extends Trigonometric {
     public java.lang.String getFirstDerivative() {
         return "f'(x) = " + a * k + "cos(" + k + "x)";
     }
-    
+
     public java.lang.String getSecondDerivative() {
-        return "f''(x) = " + -a * Math.pow(k,2) + "sin(" + k + "x)";
+        return "f''(x) = " + -a * Math.pow(k, 2) + "sin(" + k + "x)";
     }
 
     @Override
     public double getValueAt(double x, FunctionType functionType) {
-        return 0.0;
+        double ans = 0.0;
+        if (functionType == FunctionType.FIRST_DERIVATIVE) {
+            ans = a * k * Math.cos(k * x);
+        } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
+            ans = -a * Math.pow(k, 2) * Math.sin(k * x);
+        } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
+            ans = -a * Math.pow(k, 3) * Math.cos(k * x);
+        } else {
+            ans = a * Math.sin(k * x);
+        }
+        return ans;
     }
 }

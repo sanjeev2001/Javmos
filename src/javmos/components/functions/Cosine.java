@@ -27,7 +27,17 @@ public final class Cosine extends Trigonometric    {
 
     @Override
     public double getValueAt(double x, FunctionType functionType) {
-        return 0.0;
+        double ans = 0.0;
+        if (functionType == FunctionType.FIRST_DERIVATIVE) {
+            ans = -a * k * Math.sin(k * x);
+        } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
+            ans = -a * Math.pow(k, 2) * Math.cos(k * x);
+        } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
+            ans = a * Math.pow(k, 3) * Math.sin(k * x);
+        } else {
+            ans = a * Math.cos(k * x);
+        }
+        return ans;
     }
     
 }
