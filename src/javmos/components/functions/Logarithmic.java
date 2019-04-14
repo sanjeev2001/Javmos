@@ -27,7 +27,7 @@ public class Logarithmic extends Function {
 
         if (function.substring(0, 1).equals("l")) {
             a = 1;
-        } else if (function.substring(0, 1).equals("-l")) {
+        } else if (function.substring(0, 2).equals("-l")) {
             a = -1;
         } else {
             a = Double.parseDouble(function.substring(0, function.indexOf("l")));
