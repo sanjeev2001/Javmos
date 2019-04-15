@@ -74,9 +74,9 @@ public class Logarithmic extends Function {
         if (functionType == FunctionType.FIRST_DERIVATIVE) {
             return a / (x * Math.log(base));
         } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
-            return a > 0 ? -a / (Math.pow(x, 2) * Math.log(base)) : a / (Math.pow(x, 2) * Math.log(base));
+            return -a / (Math.pow(x, 2) * Math.log(base));
         } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
-            return 0;
+            return (2 * a) / (Math.log(base) * Math.pow(x, 3));
         } else {
             return a * (Math.log10(k * x) / Math.log10(base));
         }
