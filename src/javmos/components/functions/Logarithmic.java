@@ -5,6 +5,7 @@
  */
 package javmos.components.functions;
 
+import java.util.HashSet;
 import javmos.JavmosGUI;
 import javmos.components.Point;
 import javmos.enums.FunctionType;
@@ -51,20 +52,20 @@ public class Logarithmic extends Function {
         }
     }
 
-    public java.lang.String getFirstDerivative() {
+    public String getFirstDerivative() {
         return base == Math.E ? "f'(x) = " + a + "/" + "x" : "f'(x) = " + a + "/" + "(xln" + base + ")";
     }
 
-    public java.lang.String getSecondDerivative() {
+    public String getSecondDerivative() {
         String sign = a > 0 ? "-" : "";
         return base == Math.E ? "f'(x) = " + sign + a + "/" + "x^2" : "f'(x) = " + sign + a + "/" + "(x^2ln" + base + ")";
     }
 
-    public java.util.HashSet<Point> getCriticalPoints() {
+    public HashSet<Point> getCriticalPoints() {
         return null;
     }
 
-    public java.util.HashSet<Point> getInflectionPoints() {
+    public HashSet<Point> getInflectionPoints() {
         return null;
     }
 
