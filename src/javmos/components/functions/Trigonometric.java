@@ -18,24 +18,22 @@ public abstract class Trigonometric extends Function {
 
     public Trigonometric(JavmosGUI gui, String function, String name) {
         super(gui);
-        if (function.charAt(0) == name.charAt(0)){
+        function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function;
+        
+        if (function.substring(0, 1).equals(Character.toString(name.charAt(0)))) {
             a = 1;
-        } else if (function.charAt(0) == '-' && function.charAt(1) == name.charAt(0)) {
+        } else if (function.substring(0, 2).equals("-" + name.charAt(0))) {
             a = -1;
-        } else if (function.charAt(0) != function.charAt(function.indexOf(Character.toString(name.charAt(0))) - 1)) {
-            a = Integer.parseInt(function.substring(0, function.indexOf(Character.toString(name.charAt(0)))));
         } else {
-            a = Integer.parseInt(Character.toString(function.charAt(0)));
+            a = Double.parseDouble(function.substring(0, function.indexOf(Character.toString(name.charAt(0)))));
         }
         
-        if (function.charAt(function.indexOf("(") + 1) == 'x') {
+        if (function.contains("(x")) {
             k = 1;
-        } else if (function.charAt(function.indexOf("(") + 1) == '-' && function.charAt(function.indexOf("(") + 1) == function.charAt(function.indexOf(Character.toString('x')))) {
+        } else if (function.contains("(-x")) {
             k = -1;
-        } else if (function.charAt(function.indexOf("(") + 1) != function.charAt(function.indexOf("x") - 1)) {
-            k = Integer.parseInt(function.substring(function.indexOf("(") + 1, function.indexOf(Character.toString('x'))));
         } else {
-            k = Integer.parseInt(Character.toString(function.charAt(function.indexOf("(") + 1)));
+            k = Double.parseDouble(function.substring(function.indexOf("(") + 1, function.indexOf("x")));
         }
     }
 
