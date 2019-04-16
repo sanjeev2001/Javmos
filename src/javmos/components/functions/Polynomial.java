@@ -126,7 +126,16 @@ public final class Polynomial extends Function{
     }*/
 
     public String getSecondDerivative() {
-        return null;//new Polynomial(gui, getFirstDerivative()).getFirstDerivative();
+        String secondString = "f''(x)=";
+        //Applies power rule to every term twice
+        for (int i = 0; i < coefficients.length; i++) {
+            if (degrees[i] > 2) {
+                secondString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) + "x" + (degrees[i] - 2 == 1 ? "" : "^") + String.valueOf(degrees[i] - 2 == 1 ? "" : degrees[i] - 2) : String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) + "x" + (degrees[i] - 2 == 1 ? "" : "^") + String.valueOf(degrees[i] - 2 == 1 ? "" : degrees[i] - 2);
+            } else if (degrees[i] == 2) {
+                secondString += (coefficients[i] > 0 && i != 0) ? "+" + String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1)) : String.valueOf(coefficients[i] * degrees[i] * (degrees[i] - 1));
+            }
+        }
+        return secondString;
     }
 
     public double getValueAt(double x, FunctionType functionType) {
@@ -148,8 +157,4 @@ public final class Polynomial extends Function{
     public void draw(Graphics2D graphics2D) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
-
-    
 }
