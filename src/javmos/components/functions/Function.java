@@ -7,8 +7,10 @@ package javmos.components.functions;
 
 import java.awt.BasicStroke;
 import java.awt.geom.Line2D;
+import java.util.HashSet;
 import javmos.JavmosGUI;
 import javmos.components.JavmosComponent;
+import javmos.components.Point;
 import javmos.enums.FunctionType;
 
 /**
@@ -35,8 +37,22 @@ public abstract class Function extends JavmosComponent {
             }
         }*/
     }
-    
+
+    public HashSet<Point> getCriticalPoints() {
+        return null;
+    }
+
+    public abstract String getFirstDerivative();
+
+    public HashSet<Point> getInflectionPoints() {
+        return null;
+    }
+
+    public abstract String getSecondDerivative();
+
     public abstract double getValueAt(double x, FunctionType functionType);
     
-
+    public HashSet<Point> getXIntercepts() {
+        return null;
+    }
 }
