@@ -3,46 +3,40 @@ package javmos.components.functions;
 import java.awt.Graphics2D;
 import javmos.JavmosGUI;
 import javmos.enums.FunctionType;
-import javmos.exceptions.PolynomialException;
 
 
-public final class Polynomial extends Function{
+public final class Polynomial extends Function {
 
-    
     public final double[] coefficients;
     public final int[] degrees;
 
-    public Polynomial(JavmosGUI gui, String function) throws PolynomialException {
+    public Polynomial(JavmosGUI gui, String function)  {
         super(gui);
-        try {
-            function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function; //if an = sign exists evrything after it is taken as the polynomial otherwise polynomial is taken by itself
-            String[] terms = function.charAt(0) == '-' ? function.substring(1, function.length()).split("\\+|\\-") : function.split("\\+|\\-"); //# of terms is equal to the length of an array that splits the + and - signs from polynomial
-            coefficients = new double[terms.length]; //# of coeffs = number of total terms
-            degrees = new int[terms.length]; //# of degrees = number of total terms
-            int termsStart = 0;
 
-            //run a for loop to anazlyze each terms individually to retrieve coeffs and degrees 
-            for (int i = 0; i < terms.length; i++) {
-                if (terms[i].contains("x^")) {
-                    if (terms[i].substring(0, 2).equals("x^")) {
-                        coefficients[i] = 1; //if a term beings with x, coeff = 1
-                    } else {
-                        coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x"))); //take everything before the x as coeff
-                    }
-                    degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length())); //take everything after the ^ as degree
-                } else if (terms[i].contains("x") && !terms[i].contains("^")) {
-                    coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x"))); //if length of term is 1 then coeff must be 1, otherwise everything before the x is taken as coeff
-                    degrees[i] = 1; //degree must be 1
+        function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function; //if an = sign exists evrything after it is taken as the polynomial otherwise polynomial is taken by itself
+        String[] terms = function.charAt(0) == '-' ? function.substring(1, function.length()).split("\\+|\\-") : function.split("\\+|\\-"); //# of terms is equal to the length of an array that splits the + and - signs from polynomial
+        coefficients = new double[terms.length]; //# of coeffs = number of total terms
+        degrees = new int[terms.length]; //# of degrees = number of total terms
+        int termsStart = 0;
+
+        //run a for loop to anazlyze each terms individually to retrieve coeffs and degrees 
+        for (int i = 0; i < terms.length; i++) {
+            if (terms[i].contains("x^")) {
+                if (terms[i].substring(0, 2).equals("x^")) {
+                    coefficients[i] = 1; //if a term beings with x, coeff = 1
                 } else {
-                    coefficients[i] = Double.parseDouble(terms[i]); //non x term therefore entire terms is parsed
-                    degrees[i] = 0; //non x term therefore degree = 0
+                    coefficients[i] = Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x"))); //take everything before the x as coeff
                 }
-                coefficients[i] *= (function.contains("-") && function.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1; //if a - exists in the polynomial and the first character of ther terms is -, multiply coeffeicient by -1
-                termsStart += i == 0 && !(function.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1; //used to refernce where each term begins relative to the entire polynomial string
+                degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length())); //take everything after the ^ as degree
+            } else if (terms[i].contains("x") && !terms[i].contains("^")) {
+                coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x"))); //if length of term is 1 then coeff must be 1, otherwise everything before the x is taken as coeff
+                degrees[i] = 1; //degree must be 1
+            } else {
+                coefficients[i] = Double.parseDouble(terms[i]); //non x term therefore entire terms is parsed
+                degrees[i] = 0; //non x term therefore degree = 0
             }
-
-        } catch (Exception exception) {
-            throw new PolynomialException(function + " is not a valid polynomial!"); //polynomial entered is invalid anytime any exception is caught
+            coefficients[i] *= (function.contains("-") && function.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1; //if a - exists in the polynomial and the first character of ther terms is -, multiply coeffeicient by -1
+            termsStart += i == 0 && !(function.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1; //used to refernce where each term begins relative to the entire polynomial string
         }
     }
 
@@ -63,13 +57,13 @@ public final class Polynomial extends Function{
         }
     }*/
 
-    /*private int getDegree() {
+ /*private int getDegree() {
         int[] temp = degrees.clone();
         Arrays.sort(temp);
         return temp[temp.length - 1];
     }*/
 
-    /*public Polynomial getDerivative() {
+ /*public Polynomial getDerivative() {
         int numOfTerms = 0;
         int offset = 0;
 
@@ -92,10 +86,9 @@ public final class Polynomial extends Function{
         return new Polynomial(gui, firstCoefficients, firstDegrees);
     }*/
 
-    /*public String getEquation() {
+ /*public String getEquation() {
         return polynomial.contains("=") ? "f(x)=" + polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : "f(x)=" + polynomial;
     }*/
-
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
         //Applies power rule to every term
@@ -124,7 +117,6 @@ public final class Polynomial extends Function{
         }
         return roots;
     }*/
-
     public String getSecondDerivative() {
         String secondString = "f''(x)=";
         //Applies power rule to every term twice

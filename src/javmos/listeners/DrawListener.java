@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javmos.JavmosGUI;
 import javmos.components.JavmosPanel;
 import javmos.components.functions.Polynomial;
-import javmos.exceptions.PolynomialException;
+
 
 public class DrawListener implements ActionListener {
 
@@ -20,13 +20,10 @@ public class DrawListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        try {
             panel.setPolynomial(new Polynomial(gui, gui.getEquationField()));
             gui.setFirstDerivativeLabel(panel.getPolynomial().getFirstDerivative());
             gui.setSecondDerivativeLabel(panel.getPolynomial().getSecondDerivative());
-        } catch (PolynomialException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Polynomial Error", JOptionPane.ERROR_MESSAGE);
-        }
+        
         panel.repaint();
     }
 }
