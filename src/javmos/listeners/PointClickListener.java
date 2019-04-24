@@ -4,12 +4,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import javmos.JavmosGUI;
+import javmos.components.JavmosComponent;
 import javmos.components.Point;
 
 public class PointClickListener implements MouseListener {
 
     private final JavmosGUI gui;
-    private LinkedList<Point> points;
+    private LinkedList<JavmosComponent> points;
 
     public PointClickListener(JavmosGUI gui) {
         this.gui = gui;
@@ -17,13 +18,15 @@ public class PointClickListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent event) {
+        /*
         if (points != null) {
-            for (Point point : points) {
+            for (JavmosComponent point : points) {
                 if (point.getPoint().contains(event.getX(), event.getY())) {
                     gui.setPointLabel(point.toString(), point.getRootType());
                 }
             }
         }
+         */
     }
 
     @Override
@@ -46,7 +49,7 @@ public class PointClickListener implements MouseListener {
         // Not needed!
     }
 
-    public void setPoints(LinkedList<Point> points) {
+    public void setPoints(LinkedList<JavmosComponent> points) {
         this.points = points;
     }
 }
