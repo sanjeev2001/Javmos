@@ -5,7 +5,6 @@ import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import javmos.JavmosGUI;
 import javmos.components.JavmosComponent;
-import javmos.components.Point;
 
 public class PointClickListener implements MouseListener {
 
@@ -20,7 +19,7 @@ public class PointClickListener implements MouseListener {
     public void mouseClicked(MouseEvent event) {
         /*
         if (points != null) {
-            for (JavmosComponent point : points) {
+           // for (JavmosComponent point : points) {
                 if (point.getPoint().contains(event.getX(), event.getY())) {
                     gui.setPointLabel(point.toString(), point.getRootType());
                 }

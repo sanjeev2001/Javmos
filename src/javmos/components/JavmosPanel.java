@@ -13,7 +13,7 @@ public class JavmosPanel extends javax.swing.JPanel {
     private final JavmosGUI gui;
     private CartesianPlane plane;
     private Polynomial polynomial;
-    private final LinkedList<Point> points;
+    private final LinkedList<JavmosComponent> points;
     private boolean polynomialChanged = false;
 
     public JavmosPanel(JavmosGUI gui) {
