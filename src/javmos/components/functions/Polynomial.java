@@ -1,6 +1,5 @@
 package javmos.components.functions;
 
-import java.awt.Graphics2D;
 import javmos.JavmosGUI;
 import javmos.enums.FunctionType;
 
@@ -40,29 +39,6 @@ public final class Polynomial extends Function {
         }
     }
 
-
-    /*public void drawPolynomial(Graphics2D graphics2D) {
-        //this method draws very short lines at very small increments so that when they connect together, they form a much larger line
-        for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.01) {
-            if (getValueAt(i) <= gui.getMaxRange() && getValueAt(i) >= gui.getMinRange()) {//only draws within the given max and min range
-                double x1 = i * gui.getZoom() / gui.getDomainStep();
-                double y1 = getValueAt(i) * gui.getZoom() / gui.getRangeStep();
-                double x2 = (i + 0.01) * gui.getZoom() / gui.getDomainStep();
-                double y2 = getValueAt(i + 0.01) * gui.getZoom() / gui.getRangeStep();
-                graphics2D.setStroke(new BasicStroke(3));
-                /*400 added to x1 and x2 in order to start drawing from the origin 
-                y1 and y2 are subtracted from 400 in order to start drawing from the origin 
-                graphics2D.draw(new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2));
-            }
-        }
-    }*/
-
- /*private int getDegree() {
-        int[] temp = degrees.clone();
-        Arrays.sort(temp);
-        return temp[temp.length - 1];
-    }*/
-
  /*public Polynomial getDerivative() {
         int numOfTerms = 0;
         int offset = 0;
@@ -85,10 +61,6 @@ public final class Polynomial extends Function {
         }
         return new Polynomial(gui, firstCoefficients, firstDegrees);
     }*/
-
- /*public String getEquation() {
-        return polynomial.contains("=") ? "f(x)=" + polynomial.substring(polynomial.indexOf("=") + 1, polynomial.length()) : "f(x)=" + polynomial;
-    }*/
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
         //Applies power rule to every term
@@ -102,21 +74,6 @@ public final class Polynomial extends Function {
         return firstString;
     }
 
-    /*public HashSet<Point> getRoots(RootType rootType, double minDomain, double maxDomain) {
-        Polynomial function = new Polynomial(gui, coefficients, degrees);
-        HashSet<Point> roots = new HashSet<>(function.getDegree());
-        //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points
-        for (double i = minDomain; i < maxDomain; i += 0.1) {
-            if (function.newtonsMethod(rootType, i, ATTEMPTS) != null) {
-                if (rootType.getRootName().equals("x-intercept")) {
-                    roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), 0.0));
-                } else {
-                    roots.add(new Point(gui, rootType, function.newtonsMethod(rootType, i, ATTEMPTS), function.getValueAt(function.newtonsMethod(rootType, i, ATTEMPTS))));
-                }
-            }
-        }
-        return roots;
-    }*/
     public String getSecondDerivative() {
         String secondString = "f''(x)=";
         //Applies power rule to every term twice
@@ -143,10 +100,5 @@ public final class Polynomial extends Function {
             }
         }
         return ans;
-    }
-
-    @Override
-    public void draw(Graphics2D graphics2D) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
