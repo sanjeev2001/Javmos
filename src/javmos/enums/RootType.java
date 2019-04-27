@@ -34,30 +34,24 @@ public enum RootType {
     }
 
     public HashSet<Point> getRoots(JavmosGUI gui, Function function, double minDomain, double maxDomain) {
-        return null;
+        HashSet<Point> roots = new HashSet<>();
+        //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points
+        for (double i = minDomain; i < maxDomain; i += 0.1) {
+            if (this.newtonsMethod(function, i, ATTEMPTS) != null) {
+                if (this.getRootName().equals("x-intercept")) {
+                    roots.add(new Point(gui, this, this.newtonsMethod(function, i, ATTEMPTS), 0.0));
+                } else {
+                    roots.add(new Point(gui, this, this.newtonsMethod(function, i, ATTEMPTS), function.getValueAt(this.newtonsMethod(function, i, ATTEMPTS), functionOne)));
+                }
+            }
+        }
+        return roots;
     }
 
-    protected Double newtonsMethod(RootType rootType, double guess, int attempts) {
+    protected Double newtonsMethod(Function function, double guess, int attempts) {
         DecimalFormat thousandth = new DecimalFormat("#.###");
-        //Function function = new Function(gui);
-        double numerator = 0;
-        double denominator = 0;
-
-        //Based on the rootType parameter f(x) (numerator) and f'(x) (denominator) are determined
-        switch (rootType.getRootName()) {
-            case "x-intercept":
-                //numerator = function.getValueAt(guess, functionOne);
-                //denominator = new Polynomial(gui, coefficients, degrees).getDerivative();
-                break;
-            case "Critical Point":
-                //numerator = new Polynomial(gui, coefficients, degrees).getDerivative();
-                //denominator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
-                break;
-            default:
-                //numerator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative();
-                //denominator = new Polynomial(gui, coefficients, degrees).getDerivative().getDerivative().getDerivative();
-                break;
-        }
+        double numerator = function.getValueAt(guess, functionOne);
+        double denominator = function.getValueAt(guess, functionTwo);
 
         //null is returned if Newtons method is undefined, if new value - old value = 0.000001 a point has been converged on otherwise Newtons method is run again with new guess
         if (attempts == 0 || denominator == 0) {
@@ -65,7 +59,7 @@ public enum RootType {
         } else if (Math.abs((guess - (numerator / denominator) - guess)) <= 0.000001) {
             return Double.parseDouble(thousandth.format(guess - (numerator / denominator)));
         } else {
-            return newtonsMethod(rootType, guess - (numerator / denominator), attempts - 1);
+            return newtonsMethod(function, guess - (numerator / denominator), attempts - 1);
         }
     }
 }
