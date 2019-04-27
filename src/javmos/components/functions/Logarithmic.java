@@ -54,7 +54,7 @@ public class Logarithmic extends Function {
     }
 
     public HashSet<Point> getCriticalPoints() {
-        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+        return new HashSet<>();
     }
 
     public String getFirstDerivative() {
@@ -62,7 +62,7 @@ public class Logarithmic extends Function {
     }
 
     public HashSet<Point> getInflectionPoints() {
-        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+        return new HashSet<>();
     }
 
     public String getSecondDerivative() {

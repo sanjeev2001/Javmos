@@ -5,6 +5,7 @@
  */
 package javmos.components.functions;
 
+import java.util.HashSet;
 import javmos.components.Point;
 import javmos.enums.FunctionType;
 import javmos.enums.RootType;
@@ -20,7 +21,7 @@ public final class Tangent extends Trigonometric {
     }
 
     public java.util.HashSet<Point> getCriticalPoints() {
-        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+        return new HashSet<>();
     }
 
     public java.lang.String getFirstDerivative() {
@@ -28,7 +29,7 @@ public final class Tangent extends Trigonometric {
     }
 
     public java.util.HashSet<Point> getInflectionPoints() {
-        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+        return new HashSet<>();
     }
 
     public java.lang.String getSecondDerivative() {
