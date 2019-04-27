@@ -12,6 +12,7 @@ import javmos.JavmosGUI;
 import javmos.components.JavmosComponent;
 import javmos.components.Point;
 import javmos.enums.FunctionType;
+import javmos.enums.RootType;
 
 /**
  *
@@ -38,13 +39,13 @@ public abstract class Function extends JavmosComponent {
     }
 
     public HashSet<Point> getCriticalPoints() {
-        return null;
+        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 
     public abstract String getFirstDerivative();
 
     public HashSet<Point> getInflectionPoints() {
-        return null;
+        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 
     public abstract String getSecondDerivative();
@@ -52,6 +53,6 @@ public abstract class Function extends JavmosComponent {
     public abstract double getValueAt(double x, FunctionType functionType);
     
     public HashSet<Point> getXIntercepts() {
-        return null;
+        return RootType.X_INTERCEPT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 }
