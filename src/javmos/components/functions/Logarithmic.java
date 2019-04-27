@@ -9,6 +9,7 @@ import java.util.HashSet;
 import javmos.JavmosGUI;
 import javmos.components.Point;
 import javmos.enums.FunctionType;
+import javmos.enums.RootType;
 
 
 /**
@@ -52,21 +53,21 @@ public class Logarithmic extends Function {
         }
     }
 
+    public HashSet<Point> getCriticalPoints() {
+        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+    }
+
     public String getFirstDerivative() {
         return base == Math.E ? "f'(x) = " + a + "/" + "x" : "f'(x) = " + a + "/" + "(xln" + base + ")";
+    }
+
+    public HashSet<Point> getInflectionPoints() {
+        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 
     public String getSecondDerivative() {
         String sign = a > 0 ? "-" : "";
         return base == Math.E ? "f'(x) = " + sign + a + "/" + "x^2" : "f'(x) = " + sign + a + "/" + "(x^2ln" + base + ")";
-    }
-
-    public HashSet<Point> getCriticalPoints() {
-        return null;
-    }
-
-    public HashSet<Point> getInflectionPoints() {
-        return null;
     }
 
     @Override
