@@ -3,57 +3,73 @@ package javmos.components;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
+import javax.swing.JPanel;
 import javmos.JavmosGUI;
+import javmos.components.functions.Cosine;
 import javmos.components.functions.Function;
-import javmos.listeners.PointClickListener;
+import javmos.components.functions.Logarithmic;
+import javmos.components.functions.Polynomial;
+import javmos.components.functions.Sine;
+import javmos.components.functions.Tangent;
 
-public class JavmosPanel extends javax.swing.JPanel {
+public class JavmosPanel extends JPanel {
 
     private final JavmosGUI gui;
-    private CartesianPlane plane;
-    private Function function;
-    private final LinkedList<JavmosComponent> points;
-    private boolean funcionChanged = false;
-
+    private final LinkedList<JavmosComponent> components;
+    
     public JavmosPanel(JavmosGUI gui) {
         this.gui = gui;
-        this.plane = null;
-        this.function = null;
-        this.points = new LinkedList<>();
+        this.components = new LinkedList<>();
     }
 
     public Function getFunction() {
-        return function;
+        String type =  gui.getEquationField();
+        if (type.contains("log")) {
+            return new Logarithmic(gui, gui.getEquationField());
+        } else if (type.contains("tan")) {
+            return new Tangent(gui, gui.getEquationField());
+        } else if (type.contains("sin")) {
+            return new Sine(gui, gui.getEquationField());
+        } else if (type.contains("cos")) {
+            return new Cosine(gui, gui.getEquationField());
+        } else {
+            return new Polynomial(gui, gui.getEquationField());
+        }
     }
 
     public void setPlane(CartesianPlane plane) {
-        this.plane = plane;
+        components.add(plane);
     }
 
     public void setFunction(Function function) {
-        this.function = function;
-        funcionChanged = true;
-        points.clear(); //Clears the list so that points that were added from previous polynomials are no longer included
-        //points are only added within viewable domain
+        components.clear(); //Clears the list so that points that were added from previous polynomials are no longer included
+        
+        //Adds all the points to the list
+        /*LinkedList<Point> points = new LinkedList<>();
         points.addAll(function.getXIntercepts());
         points.addAll(function.getCriticalPoints());
-        points.addAll(function.getInflectionPoints());
-        //Adds all the points to the list
-        PointClickListener clickListener = new PointClickListener(gui);
-        clickListener.setPoints(points);
-        this.addMouseListener(clickListener); //Adds a listener to each point so that they can be clicked
+        points.addAll(function.getInflectionPoints());*/
+        
+        
+        /*PointClickListener clickListener = new PointClickListener(gui);
+        clickListener.setPoints(points);*/
+        components.add(function);
+        //this.addMouseListener(clickListener); //Adds a listener to each point so that they can be clicked
     }
 
     @Override
     public void paintComponent(Graphics graphics) {
-        plane = new CartesianPlane(gui);
-        plane.draw((Graphics2D) graphics); //Draws the cartesian plane
-        if (funcionChanged == true) { //Only attempts to draw polynomial and points after a polynomial is entered
-            function.draw((Graphics2D) graphics);//Draws the polynomial
-            setFunction(function);
-            for (int i = 0; i < points.size(); i++) {
-                points.get(i).draw((Graphics2D) graphics); //Draws all the points that are in the list  
-            }
+        CartesianPlane plane = new CartesianPlane(gui);
+        setPlane(plane);
+        if (!gui.getEquationField().contains("ENTER")) {
+            setFunction(getFunction());
+            components.addAll(getFunction().getXIntercepts());
+        components.addAll(getFunction().getCriticalPoints());
+        components.addAll(getFunction().getInflectionPoints());
         }
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).draw((Graphics2D) graphics); //Draws all the points that are in the list  
+        }
+        components.clear();
     }
 }

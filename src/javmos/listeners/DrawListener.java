@@ -2,10 +2,9 @@ package javmos.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 import javmos.JavmosGUI;
 import javmos.components.JavmosPanel;
-import javmos.components.functions.Polynomial;
+import javmos.components.functions.Function;
 
 
 public class DrawListener implements ActionListener {
@@ -20,10 +19,9 @@ public class DrawListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-            panel.setPolynomial(new Polynomial(gui, gui.getEquationField()));
-            gui.setFirstDerivativeLabel(panel.getPolynomial().getFirstDerivative());
-            gui.setSecondDerivativeLabel(panel.getPolynomial().getSecondDerivative());
-        
-        panel.repaint();
+            
+            gui.setFirstDerivativeLabel(panel.getFunction().getFirstDerivative());
+            gui.setSecondDerivativeLabel(panel.getFunction().getSecondDerivative());
+            panel.repaint();
     }
 }

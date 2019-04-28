@@ -19,7 +19,7 @@ public abstract class Trigonometric extends Function {
     public Trigonometric(JavmosGUI gui, String function, String name) {
         super(gui);
         function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function;
-        
+
         if (function.substring(0, 1).equals(Character.toString(name.charAt(0)))) {
             a = 1;
         } else if (function.substring(0, 2).equals("-" + name.charAt(0))) {
@@ -27,7 +27,7 @@ public abstract class Trigonometric extends Function {
         } else {
             a = Double.parseDouble(function.substring(0, function.indexOf(Character.toString(name.charAt(0)))));
         }
-        
+
         if (function.contains("(x")) {
             k = 1;
         } else if (function.contains("(-x")) {
@@ -35,6 +35,7 @@ public abstract class Trigonometric extends Function {
         } else {
             k = Double.parseDouble(function.substring(function.indexOf("(") + 1, function.indexOf("x")));
         }
+
     }
 
 }
