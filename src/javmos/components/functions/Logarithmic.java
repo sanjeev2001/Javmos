@@ -24,9 +24,7 @@ public class Logarithmic extends Function {
     public Logarithmic(JavmosGUI gui, String function) {
         super(gui);
         function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function;
-        double a;
-        double base;
-        double k;
+        
 
         if (function.substring(0, 1).equals("l")) {
             a = 1;
@@ -53,18 +51,22 @@ public class Logarithmic extends Function {
         }
     }
 
+   @Override
     public HashSet<Point> getCriticalPoints() {
         return new HashSet<>();
     }
 
+   @Override
     public String getFirstDerivative() {
         return base == Math.E ? "f'(x) = " + a + "/" + "x" : "f'(x) = " + a + "/" + "(xln" + base + ")";
     }
 
+   @Override
     public HashSet<Point> getInflectionPoints() {
         return new HashSet<>();
     }
 
+   @Override
     public String getSecondDerivative() {
         String sign = a > 0 ? "-" : "";
         return base == Math.E ? "f'(x) = " + sign + a + "/" + "x^2" : "f'(x) = " + sign + a + "/" + "(x^2ln" + base + ")";

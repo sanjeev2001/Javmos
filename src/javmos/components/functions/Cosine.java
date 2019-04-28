@@ -17,10 +17,12 @@ public final class Cosine extends Trigonometric    {
         super(gui, function, "cos");
     }
     
+    @Override
     public java.lang.String getFirstDerivative() {
         return "f'(x) = " + -a * k + "sin(" + k + "x)";
     }
     
+    @Override
     public java.lang.String getSecondDerivative() {
         return "f''(x) = " + a * Math.pow(k,2) + "cos(" + k + "x)";
     }

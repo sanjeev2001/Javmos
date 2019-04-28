@@ -20,6 +20,7 @@ public final class Tangent extends Trigonometric {
         super(gui, function, "tan");
     }
 
+    @Override
     public java.util.HashSet<Point> getCriticalPoints() {
         return new HashSet<>();
     }
@@ -28,10 +29,12 @@ public final class Tangent extends Trigonometric {
         return "f'(x) = " + a * k + "sec^2(" + k + "x)";
     }
 
+    @Override
     public java.util.HashSet<Point> getInflectionPoints() {
         return new HashSet<>();
     }
 
+    @Override
     public java.lang.String getSecondDerivative() {
         return "f''(x) = " + 2 * a * Math.pow(k, 2) + "sec^2(" + k + "x) * tan(" + k + "x)";
     }

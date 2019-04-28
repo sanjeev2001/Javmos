@@ -17,10 +17,12 @@ public final class Sine extends Trigonometric {
         super(gui, function, "sin");
     }
 
+    @Override
     public java.lang.String getFirstDerivative() {
         return "f'(x) = " + a * k + "cos(" + k + "x)";
     }
 
+    @Override
     public java.lang.String getSecondDerivative() {
         return "f''(x) = " + -a * Math.pow(k, 2) + "sin(" + k + "x)";
     }
