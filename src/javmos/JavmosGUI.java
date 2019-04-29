@@ -39,7 +39,7 @@ public final class JavmosGUI {
     private final double RANGE_STEP = 1;
     private final double ZOOM = 50;
     // Create GUI's container components
-    private final JFrame frame = new JFrame("Javmos v1.0");
+    private final JFrame frame = new JFrame("Javmos v2.0");
     private final JPanel mainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
     private final JavmosPanel javmosPanel = new JavmosPanel(this);
     private final JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
