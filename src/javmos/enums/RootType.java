@@ -12,7 +12,7 @@ public enum RootType {
     CRITICAL_POINT(Color.RED, "Critical Point", FunctionType.FIRST_DERIVATIVE, FunctionType.SECOND_DERIVATIVE),
     INFLECTION_POINT(Color.BLUE, "Inflection Point", FunctionType.SECOND_DERIVATIVE, FunctionType.THIRD_DERIVATIVE);
     
-    public final int ATTEMPTS = 15;
+    public final int ATTEMPTS = 50;
     public final FunctionType functionOne;
     public final FunctionType functionTwo;
     public final Color rootColor;
@@ -35,10 +35,11 @@ public enum RootType {
 
     public HashSet<Point> getRoots(JavmosGUI gui, Function function, double minDomain, double maxDomain) {
         HashSet<Point> roots = new HashSet<>();
+
         //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points
-        for (double i = minDomain; i < maxDomain; i += 0.1) {
-            if (this.newtonsMethod(function, i, ATTEMPTS) != null) {
-                if (this.getRootName().equals("x-intercept")) {
+        for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 1) {
+            if (newtonsMethod(function, i, ATTEMPTS) != null) {
+                if (rootName.equals("x-intercept")) {
                     roots.add(new Point(gui, this, this.newtonsMethod(function, i, ATTEMPTS), 0.0));
                 } else {
                     roots.add(new Point(gui, this, this.newtonsMethod(function, i, ATTEMPTS), function.getValueAt(this.newtonsMethod(function, i, ATTEMPTS), functionOne)));
@@ -52,11 +53,12 @@ public enum RootType {
         DecimalFormat thousandth = new DecimalFormat("#.###");
         double numerator = function.getValueAt(guess, functionOne);
         double denominator = function.getValueAt(guess, functionTwo);
-
+        //double ans = Math.abs(guess - (numerator / denominator)) - Math.abs(guess);
         //null is returned if Newtons method is undefined, if new value - old value = 0.000001 a point has been converged on otherwise Newtons method is run again with new guess
         if (attempts == 0 || denominator == 0) {
             return null;
-        } else if (Math.abs((guess - (numerator / denominator) - guess)) <= 0.000001) {
+        } else if (Math.abs((Math.abs(guess - (numerator / denominator)) - Math.abs(guess))) <= 0.001) {
+            //System.out.println(Math.abs(guess - (numerator / denominator)) - Math.abs(guess));
             return Double.parseDouble(thousandth.format(guess - (numerator / denominator)));
         } else {
             return newtonsMethod(function, guess - (numerator / denominator), attempts - 1);

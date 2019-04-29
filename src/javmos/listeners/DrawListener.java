@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javmos.JavmosGUI;
 import javmos.components.JavmosPanel;
-import javmos.components.functions.Function;
-
 
 public class DrawListener implements ActionListener {
 
@@ -19,9 +17,9 @@ public class DrawListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-            
-            gui.setFirstDerivativeLabel(panel.getFunction().getFirstDerivative());
-            gui.setSecondDerivativeLabel(panel.getFunction().getSecondDerivative());
-            panel.repaint();
+        panel.setFunction(panel.getFunction());
+        gui.setFirstDerivativeLabel(panel.getFunction().getFirstDerivative());
+        gui.setSecondDerivativeLabel(panel.getFunction().getSecondDerivative());
+        panel.repaint();
     }
 }

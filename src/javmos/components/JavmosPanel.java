@@ -11,6 +11,8 @@ import javmos.components.functions.Logarithmic;
 import javmos.components.functions.Polynomial;
 import javmos.components.functions.Sine;
 import javmos.components.functions.Tangent;
+import javmos.enums.RootType;
+import javmos.listeners.PointClickListener;
 
 public class JavmosPanel extends JPanel {
 
@@ -24,7 +26,7 @@ public class JavmosPanel extends JPanel {
 
     public Function getFunction() {
         String type =  gui.getEquationField();
-        if (type.contains("log")) {
+        if (type.contains("log") || type.contains("ln")) {
             return new Logarithmic(gui, gui.getEquationField());
         } else if (type.contains("tan")) {
             return new Tangent(gui, gui.getEquationField());
@@ -42,19 +44,19 @@ public class JavmosPanel extends JPanel {
     }
 
     public void setFunction(Function function) {
-        components.clear(); //Clears the list so that points that were added from previous polynomials are no longer included
-        
+        //components.clear(); //Clears the list so that points that were added from previous polynomials are no longer included
         //Adds all the points to the list
-        /*LinkedList<Point> points = new LinkedList<>();
+        LinkedList<Point> points = new LinkedList<>();
         points.addAll(function.getXIntercepts());
         points.addAll(function.getCriticalPoints());
-        points.addAll(function.getInflectionPoints());*/
-        
-        
-        /*PointClickListener clickListener = new PointClickListener(gui);
-        clickListener.setPoints(points);*/
+        points.addAll(function.getInflectionPoints());
+        components.addAll(getFunction().getXIntercepts());
+        components.addAll(getFunction().getCriticalPoints());
+        components.addAll(getFunction().getInflectionPoints());
+        PointClickListener clickListener = new PointClickListener(gui);
+        clickListener.setPoints(points);
+        this.addMouseListener(clickListener); //Adds a listener to each point so that they can be clicked
         components.add(function);
-        //this.addMouseListener(clickListener); //Adds a listener to each point so that they can be clicked
     }
 
     @Override
@@ -63,13 +65,10 @@ public class JavmosPanel extends JPanel {
         setPlane(plane);
         if (!gui.getEquationField().contains("ENTER")) {
             setFunction(getFunction());
-            components.addAll(getFunction().getXIntercepts());
-        components.addAll(getFunction().getCriticalPoints());
-        components.addAll(getFunction().getInflectionPoints());
         }
+
         for (int i = 0; i < components.size(); i++) {
             components.get(i).draw((Graphics2D) graphics); //Draws all the points that are in the list  
         }
-        components.clear();
     }
 }

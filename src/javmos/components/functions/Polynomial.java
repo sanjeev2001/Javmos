@@ -39,28 +39,6 @@ public final class Polynomial extends Function {
         }
     }
 
- /*public Polynomial getDerivative() {
-        int numOfTerms = 0;
-        int offset = 0;
-
-        for (int i = 0; i < degrees.length; i++) {
-            numOfTerms += degrees[i] > 0 ? 1 : 0; //# of terms = degrees of f(x) that are > 0 due to d/dx of constants being 0
-        }
-
-        double[] firstCoefficients = new double[numOfTerms];
-        int[] firstDegrees = new int[numOfTerms];
-
-        //Applies power rule to every term if degree < 0 terms must be constant therefore it is skipped and added as an offset to compensate for index
-        for (int i = 0; i < coefficients.length; i++) {
-            if (degrees[i] > 0) {
-                firstCoefficients[i - offset] = coefficients[i] * degrees[i];
-                firstDegrees[i - offset] = degrees[i] - 1;
-            } else {
-                offset += 1;
-            }
-        }
-        return new Polynomial(gui, firstCoefficients, firstDegrees);
-    }*/
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
         //Applies power rule to every term
@@ -90,15 +68,41 @@ public final class Polynomial extends Function {
     public double getValueAt(double x, FunctionType functionType) {
         double ans = 0.0;
 
-        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent
-        otherwise term is constant either term types are added to a total value */
-        for (int i = 0; i < coefficients.length; i++) {
-            if (degrees[i] > 0) {
-                ans += coefficients[i] * Math.pow(x, degrees[i]);
-            } else {
-                ans += coefficients[i];
+        if (functionType == FunctionType.FIRST_DERIVATIVE) {
+            for (int i = 0; i < coefficients.length; i++) {
+                if (degrees[i] - 1 > 0) {
+                    ans += coefficients[i] * degrees[i] * Math.pow(x, degrees[i] - 1);
+                } else if (degrees[i] - 1 == 0) {
+                    ans += coefficients[i];
+                }
+            }
+        } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
+            for (int i = 0; i < coefficients.length; i++) {
+                if (degrees[i] - 2 > 0) {
+                    ans += coefficients[i] * degrees[i] * (degrees[i] - 1) * Math.pow(x, degrees[i] - 2);
+                } else if (degrees[i] - 2 == 0) {
+                    ans += coefficients[i];
+                }
+            }
+        } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
+            for (int i = 0; i < coefficients.length; i++) {
+                if (degrees[i] - 3 > 0) {
+                    ans += coefficients[i] * degrees[i] * (degrees[i] - 2) * (degrees[i] - 1) * Math.pow(x, degrees[i] - 3);
+                } else if (degrees[i] - 3 == 0) {
+                    ans += coefficients[i];
+                }
+            }
+        } else {
+            for (int i = 0; i < coefficients.length; i++) {
+                if (degrees[i] > 0) {
+                    ans += coefficients[i] * Math.pow(x, degrees[i]);
+                } else {
+                    ans += coefficients[i];
+                }
             }
         }
         return ans;
+        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent
+        otherwise term is constant either term types are added to a total value */
     }
 }

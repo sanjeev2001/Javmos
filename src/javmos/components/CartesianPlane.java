@@ -1,6 +1,7 @@
 package javmos.components;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
 import javmos.JavmosGUI;
@@ -17,6 +18,7 @@ public class CartesianPlane extends JavmosComponent {
         double d = gui.getDomainStep();
         double r = gui.getRangeStep();
         DecimalFormat thousandth = new DecimalFormat("#.###");
+        graphics2D.setColor(Color.black);
         graphics2D.clearRect(0, 0, 800, 800);
         graphics2D.setFont(new Font("TimesRoman", Font.BOLD, 14)); //Sets font size and font type
 

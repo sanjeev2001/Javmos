@@ -25,7 +25,7 @@ public class Point extends JavmosComponent{
 
     public void draw(Graphics2D graphics2D) {
         //Only draws when the point is within the min and max domain and range
-        if (x > this.gui.getMinDomain() && x < this.gui.getMaxDomain() && y > this.gui.getMinRange() && y < this.gui.getMaxRange()) {
+        if (x > gui.getMinDomain() && x < gui.getMaxDomain() && y > gui.getMinRange() && y < gui.getMaxRange()) {
             graphics2D.setStroke(new BasicStroke(8));
             graphics2D.setColor(rootType.getRootColor());
             graphics2D.draw(getPoint());
