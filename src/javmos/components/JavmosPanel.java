@@ -11,7 +11,6 @@ import javmos.components.functions.Logarithmic;
 import javmos.components.functions.Polynomial;
 import javmos.components.functions.Sine;
 import javmos.components.functions.Tangent;
-import javmos.enums.RootType;
 import javmos.listeners.PointClickListener;
 
 public class JavmosPanel extends JPanel {
@@ -46,6 +45,7 @@ public class JavmosPanel extends JPanel {
     public void setFunction(Function function) {
         //components.clear(); //Clears the list so that points that were added from previous polynomials are no longer included
         //Adds all the points to the list
+        components.add(function);
         LinkedList<Point> points = new LinkedList<>();
         points.addAll(function.getXIntercepts());
         points.addAll(function.getCriticalPoints());
@@ -56,7 +56,6 @@ public class JavmosPanel extends JPanel {
         PointClickListener clickListener = new PointClickListener(gui);
         clickListener.setPoints(points);
         this.addMouseListener(clickListener); //Adds a listener to each point so that they can be clicked
-        components.add(function);
     }
 
     @Override
