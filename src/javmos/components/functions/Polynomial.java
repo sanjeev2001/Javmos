@@ -81,7 +81,7 @@ public final class Polynomial extends Function {
                 if (degrees[i] - 2 > 0) {
                     ans += coefficients[i] * degrees[i] * (degrees[i] - 1) * Math.pow(x, degrees[i] - 2);
                 } else if (degrees[i] - 2 == 0) {
-                    ans += coefficients[i];
+                    ans += coefficients[i] * degrees[i];
                 }
             }
         } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
@@ -89,7 +89,7 @@ public final class Polynomial extends Function {
                 if (degrees[i] - 3 > 0) {
                     ans += coefficients[i] * degrees[i] * (degrees[i] - 2) * (degrees[i] - 1) * Math.pow(x, degrees[i] - 3);
                 } else if (degrees[i] - 3 == 0) {
-                    ans += coefficients[i];
+                    ans += coefficients[i] * degrees[i] * (degrees[i] - 1);
                 }
             }
         } else {

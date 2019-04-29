@@ -17,7 +17,7 @@ public class DrawListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        panel.setFunction(panel.getFunction());
+        //panel.setFunction(panel.getFunction());
         gui.setFirstDerivativeLabel(panel.getFunction().getFirstDerivative());
         gui.setSecondDerivativeLabel(panel.getFunction().getSecondDerivative());
         panel.repaint();

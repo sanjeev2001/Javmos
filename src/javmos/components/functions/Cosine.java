@@ -24,7 +24,7 @@ public final class Cosine extends Trigonometric    {
     
     @Override
     public java.lang.String getSecondDerivative() {
-        return "f''(x) = " + a * Math.pow(k,2) + "cos(" + k + "x)";
+        return "f''(x) = " + a * Math.pow(k, 2) + "cos(" + k + "x)";
     }
 
     @Override
