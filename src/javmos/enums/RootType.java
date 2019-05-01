@@ -57,10 +57,10 @@ public enum RootType {
         //null is returned if Newtons method is undefined, if new value - old value = 0.000001 a point has been converged on otherwise Newtons method is run again with new guess
         if (attempts == 0 || denominator == 0) {
             return null;
-        } else if (Math.abs((Math.abs(guess - (numerator / denominator)) - Math.abs(guess))) <= 0.001) {
-            return Double.parseDouble(thousandth.format(guess - (numerator / denominator)));
+        } else if (Math.abs((Math.abs(ans) - Math.abs(guess))) <= 0.000001 && function.getValueAt(ans, functionOne) <= 0.01 && function.getValueAt(ans, functionOne) >= -0.01) {
+            return Double.parseDouble(thousandth.format(ans));
         } else {
-            return newtonsMethod(function, guess - (numerator / denominator), attempts - 1);
+            return newtonsMethod(function, ans, attempts - 1);
         }
     }
 }
