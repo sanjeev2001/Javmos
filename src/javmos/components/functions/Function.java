@@ -19,7 +19,9 @@ public abstract class Function extends JavmosComponent {
     @Override
     public void draw(java.awt.Graphics2D graphics2D) {
         String function = gui.getEquationField();
+        double a = 0;
         double k = 0;
+        String name = "tan";
         double x1, x2, y1, y2;
         for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.01) {
             //only draws within the given max and min range
@@ -34,7 +36,15 @@ public abstract class Function extends JavmosComponent {
                 Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);
                 //System.out.println("y1: " + line.getY1() + " y2: " + line.getY2());
                 if (function.contains("tan")) {
-                    //Uses the k value
+                    //Checks the sign of the a and k value in order to avoid drawing asymptotes
+                    if (function.substring(0, 1).equals(Character.toString(name.charAt(0)))) {
+                        a = 1;
+                    } else if (function.substring(0, 2).equals("-" + name.charAt(0))) {
+                        a = -1;
+                    } else {
+                        a = Double.parseDouble(function.substring(0, function.indexOf(Character.toString(name.charAt(0)))));
+                    }
+
                     if (function.contains("(x")) {
                         k = 1;
                     } else if (function.contains("(-x")) {
@@ -42,8 +52,13 @@ public abstract class Function extends JavmosComponent {
                     } else {
                         k = Double.parseDouble(function.substring(function.indexOf("(") + 1, function.indexOf("x")));
                     }
+
+                    if (a < 0 && k < 0) {
+                        a = 1;
+                        k = 1;
+                    }
                 }
-                if (!(function.contains("tan")) || (line.getY1() > line.getY2() && k > 0) || (line.getY2() > line.getY1() && k < 0)) {
+                if (!(function.contains("tan")) || (line.getY1() > line.getY2() && k > 0 && a > 0) || (line.getY2() > line.getY1() && (k < 0 || a < 0))) {
                     graphics2D.draw(line);
                 }
             }
