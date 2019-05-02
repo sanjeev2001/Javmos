@@ -1,8 +1,8 @@
 package javmos.enums;
 
 public enum FunctionType {
-    ORIGINAL,
     FIRST_DERIVATIVE,
+    ORIGINAL,
     SECOND_DERIVATIVE,
     THIRD_DERIVATIVE;
 }

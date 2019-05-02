@@ -35,9 +35,10 @@ public enum RootType {
 
     public HashSet<Point> getRoots(JavmosGUI gui, Function function, double minDomain, double maxDomain) {
         HashSet<Point> roots = new HashSet<>();
-
-        //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points
-        for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.1) {
+        minDomain = -400 / gui.getZoom() * gui.getDomainStep();
+        maxDomain = 400 / gui.getZoom() * gui.getDomainStep();
+        //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points  
+        for (double i = minDomain; i < maxDomain; i += 0.1) {
             if (newtonsMethod(function, i, ATTEMPTS) != null) {
                 if (rootName.equals("x-intercept")) {
                     roots.add(new Point(gui, this, this.newtonsMethod(function, i, ATTEMPTS), 0.0));
@@ -54,7 +55,7 @@ public enum RootType {
         double numerator = function.getValueAt(guess, functionOne);
         double denominator = function.getValueAt(guess, functionTwo);
         double ans = guess - (numerator / denominator);
-        //null is returned if Newtons method is undefined, if new value - old value = 0.000001 a point has been converged on otherwise Newtons method is run again with new guess
+        //null is returned if Newtons method is undefined or root not found, if new value - old value <= 0.000001 and root is in fact 0, a point has been converged on otherwise Newtons method is run again with new guess
         if (attempts == 0 || denominator == 0) {
             return null;
         } else if (Math.abs((Math.abs(ans) - Math.abs(guess))) <= 0.000001 && function.getValueAt(ans, functionOne) <= 0.01 && function.getValueAt(ans, functionOne) >= -0.01) {

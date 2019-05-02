@@ -10,10 +10,6 @@ import javmos.components.Point;
 import javmos.enums.FunctionType;
 import javmos.enums.RootType;
 
-/**
- *
- * @author user
- */
 public abstract class Function extends JavmosComponent {
 
     protected Function(JavmosGUI gui) {
@@ -31,9 +27,9 @@ public abstract class Function extends JavmosComponent {
                 y2 = getValueAt(i + 0.01, FunctionType.ORIGINAL) * gui.getZoom() / gui.getRangeStep();
                 graphics2D.setStroke(new BasicStroke(3));
                 graphics2D.setColor(Color.black);
-                Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);
+                Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);//Creates the line object to be drawn  
 
-                if (line.getY1() + 5000 > line.getY2()) {//Only draws lines in relatively small intervals
+                if (line.getY1() + 10000 > line.getY2()) {//Only draws lines in relatively small intervals to avoid drawing vertical asymptotes
                     graphics2D.draw(line);
                 }
             }
@@ -41,15 +37,15 @@ public abstract class Function extends JavmosComponent {
     }
 
     public HashSet<Point> getXIntercepts() {
-        return RootType.X_INTERCEPT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+        return RootType.X_INTERCEPT.getRoots(gui, this, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep());//Uses getRoots to find the x-intercepts within the domain that is on screen
     }
 
     public HashSet<Point> getCriticalPoints() {
-        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+        return RootType.CRITICAL_POINT.getRoots(gui, this, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep());//Uses getRoots to find the critical points within the domain that is on screen
     }
 
     public HashSet<Point> getInflectionPoints() {
-        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+        return RootType.INFLECTION_POINT.getRoots(gui, this, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep());//Uses getRoots to find the inflection points within the domain that is on screen
     }
 
     public abstract String getFirstDerivative();
@@ -57,5 +53,4 @@ public abstract class Function extends JavmosComponent {
     public abstract String getSecondDerivative();
 
     public abstract double getValueAt(double x, FunctionType functionType);
-
 }

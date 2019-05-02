@@ -1,15 +1,15 @@
 package javmos.components.functions;
 
+import java.util.Arrays;
 import javmos.JavmosGUI;
 import javmos.enums.FunctionType;
-
 
 public final class Polynomial extends Function {
 
     public final double[] coefficients;
     public final int[] degrees;
 
-    public Polynomial(JavmosGUI gui, String function)  {
+    public Polynomial(JavmosGUI gui, String function) {
         super(gui);
 
         function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function; //if an = sign exists evrything after it is taken as the polynomial otherwise polynomial is taken by itself
@@ -18,7 +18,7 @@ public final class Polynomial extends Function {
         degrees = new int[terms.length]; //# of degrees = number of total terms
         int termsStart = 0;
 
-        //run a for loop to anazlyze each terms individually to retrieve coeffs and degrees 
+        //run a for loop to anazlyze each terms individually to retrieve coeffs and degrees
         for (int i = 0; i < terms.length; i++) {
             if (terms[i].contains("x^")) {
                 if (terms[i].substring(0, 2).equals("x^")) {
@@ -66,33 +66,14 @@ public final class Polynomial extends Function {
     }
 
     public double getValueAt(double x, FunctionType functionType) {
+        int[] temp = degrees.clone();
+        Arrays.sort(temp);
         double ans = 0.0;
 
-        if (functionType == FunctionType.FIRST_DERIVATIVE) {
-            for (int i = 0; i < coefficients.length; i++) {
-                if (degrees[i] - 1 > 0) {
-                    ans += coefficients[i] * degrees[i] * Math.pow(x, degrees[i] - 1);
-                } else if (degrees[i] - 1 == 0) {
-                    ans += coefficients[i];
-                }
-            }
-        } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
-            for (int i = 0; i < coefficients.length; i++) {
-                if (degrees[i] - 2 > 0) {
-                    ans += coefficients[i] * degrees[i] * (degrees[i] - 1) * Math.pow(x, degrees[i] - 2);
-                } else if (degrees[i] - 2 == 0) {
-                    ans += coefficients[i] * degrees[i];
-                }
-            }
-        } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
-            for (int i = 0; i < coefficients.length; i++) {
-                if (degrees[i] - 3 > 0) {
-                    ans += coefficients[i] * degrees[i] * (degrees[i] - 2) * (degrees[i] - 1) * Math.pow(x, degrees[i] - 3);
-                } else if (degrees[i] - 3 == 0) {
-                    ans += coefficients[i] * degrees[i] * (degrees[i] - 1);
-                }
-            }
-        } else {
+        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent  
+        otherwise term is constant, both term types are added to a total value named ans  */
+        //If higher degree derivative is needed, derivative is calculated then getValue is run again with new Polynomial object 
+        if (functionType == FunctionType.ORIGINAL) {
             for (int i = 0; i < coefficients.length; i++) {
                 if (degrees[i] > 0) {
                     ans += coefficients[i] * Math.pow(x, degrees[i]);
@@ -100,9 +81,15 @@ public final class Polynomial extends Function {
                     ans += coefficients[i];
                 }
             }
+            return ans;
+        } else if (functionType == FunctionType.FIRST_DERIVATIVE) {
+            return new Polynomial(gui, this.getFirstDerivative()).getValueAt(x, FunctionType.ORIGINAL);
+        } else if (functionType == FunctionType.SECOND_DERIVATIVE && temp[temp.length - 1] >= 2) {
+            return new Polynomial(gui, this.getSecondDerivative()).getValueAt(x, FunctionType.ORIGINAL);
+        } else if (functionType == FunctionType.THIRD_DERIVATIVE && temp[temp.length - 1] >= 3) {
+            return new Polynomial(gui, new Polynomial(gui, this.getSecondDerivative()).getFirstDerivative()).getValueAt(x, FunctionType.ORIGINAL);
+        } else {
+            return 0;
         }
-        return ans;
-        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent
-        otherwise term is constant either term types are added to a total value */
     }
 }
