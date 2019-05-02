@@ -18,17 +18,17 @@ public final class Sine extends Trigonometric {
     }
 
     @Override
-    public java.lang.String getFirstDerivative() {
+    public java.lang.String getFirstDerivative() { //Returns a string that contains the first derivative
         return "f'(x) = " + a * k + "cos(" + k + "x)";
     }
 
     @Override
-    public java.lang.String getSecondDerivative() {
+    public java.lang.String getSecondDerivative() { //Returns a string that contains the second derivative
         return "f''(x) = " + -a * Math.pow(k, 2) + "sin(" + k + "x)";
     }
 
     @Override
-    public double getValueAt(double x, FunctionType functionType) {
+    public double getValueAt(double x, FunctionType functionType) { //Calculates the value of the sine function given the x value and the function type
         double ans = 0.0;
         if (functionType == FunctionType.FIRST_DERIVATIVE) {
             ans = a * k * Math.cos(k * x);

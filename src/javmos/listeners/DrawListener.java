@@ -2,6 +2,7 @@ package javmos.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import javmos.JavmosGUI;
 import javmos.components.JavmosPanel;
 
@@ -17,9 +18,12 @@ public class DrawListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        //panel.setFunction(panel.getFunction());
-        gui.setFirstDerivativeLabel(panel.getFunction().getFirstDerivative());
-        gui.setSecondDerivativeLabel(panel.getFunction().getSecondDerivative());
-        panel.repaint();
+        try {
+            gui.setFirstDerivativeLabel(panel.getFunction().getFirstDerivative());
+            gui.setSecondDerivativeLabel(panel.getFunction().getSecondDerivative());
+            panel.repaint();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "The function you entered is not valid", "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
