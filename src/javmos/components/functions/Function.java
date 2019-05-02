@@ -41,15 +41,15 @@ public abstract class Function extends JavmosComponent {
     }
 
     public HashSet<Point> getXIntercepts() {
-        return RootType.X_INTERCEPT.getRoots(gui, this, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep());
+        return RootType.X_INTERCEPT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 
     public HashSet<Point> getCriticalPoints() {
-        return RootType.CRITICAL_POINT.getRoots(gui, this, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep());
+        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 
     public HashSet<Point> getInflectionPoints() {
-        return RootType.INFLECTION_POINT.getRoots(gui, this, -400 / gui.getZoom() * gui.getDomainStep(), 400 / gui.getZoom() * gui.getDomainStep());
+        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 
     public abstract String getFirstDerivative();
