@@ -32,7 +32,7 @@ public class Logarithmic extends Function {
             a = Double.parseDouble(function.substring(0, function.indexOf("l")));
         }
 
-        if (function.contains("ln")) {//Extracts the number prior to the '(' and after the 'g' or sets the base to 'E' if ln is present
+        if (function.contains("ln")) {//Extracts the number prior to the '(' and after the 'g' or sets the base to 'E' if ln is present  
             base = Math.E;
         } else if (function.contains("g(")) {
             base = 10;

@@ -25,7 +25,7 @@ public class JavmosPanel extends JPanel {
 
     public Function getFunction() {
         String type = gui.getEquationField();
-        // Takes the equation and checks for specific terms that determine what type of function it is
+        // Takes the equation and checks for specific terms that determine what type of function it is  
         if (type.contains("log") || type.contains("ln")) {
             return new Logarithmic(gui, gui.getEquationField());
         } else if (type.contains("tan")) {

@@ -18,7 +18,7 @@ public class DrawListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        try {
+        try { //Checks if the function is valid before performing calculations
             gui.setFirstDerivativeLabel(panel.getFunction().getFirstDerivative());
             gui.setSecondDerivativeLabel(panel.getFunction().getSecondDerivative());
             panel.repaint();

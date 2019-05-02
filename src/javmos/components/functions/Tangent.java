@@ -30,7 +30,7 @@ public final class Tangent extends Trigonometric {
     }
 
     @Override
-    public java.lang.String getFirstDerivative() { //Returns a string that contains the first derivative
+    public java.lang.String getFirstDerivative() { //Returns a string that contains the first derivative  
         return "f'(x) = " + a * k + "sec^2(" + k + "x)";
     }
 

@@ -29,7 +29,7 @@ public final class Cosine extends Trigonometric {
     }
 
     @Override
-    public double getValueAt(double x, FunctionType functionType) { //Calculates the value of the cosine function given the x value and the function type
+    public double getValueAt(double x, FunctionType functionType) { //Calculates the value of the cosine function given the x value and the function type  
         double ans = 0.0;
         if (functionType == FunctionType.FIRST_DERIVATIVE) {
             ans = -a * k * Math.sin(k * x);

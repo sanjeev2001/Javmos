@@ -31,7 +31,7 @@ public abstract class Function extends JavmosComponent {
                 y2 = getValueAt(i + 0.01, FunctionType.ORIGINAL) * gui.getZoom() / gui.getRangeStep();
                 graphics2D.setStroke(new BasicStroke(3));
                 graphics2D.setColor(Color.black);
-                Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);//Creates the line object to be drawn
+                Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);//Creates the line object to be drawn  
 
                 if (line.getY1() + 10000 > line.getY2()) {//Only draws lines in relatively small intervals to avoid drawing vertical asymptotes
                     graphics2D.draw(line);

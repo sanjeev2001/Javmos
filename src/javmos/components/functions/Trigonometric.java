@@ -16,7 +16,7 @@ public abstract class Trigonometric extends Function {
     protected double a;
     protected double k;
 
-    public Trigonometric(JavmosGUI gui, String function, String name) {//Parses the trigonometric function to obtain the a and k values
+    public Trigonometric(JavmosGUI gui, String function, String name) {//Parses the trigonometric function to obtain the a and k values  
         super(gui);
         function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function;
 

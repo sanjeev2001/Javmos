@@ -88,7 +88,7 @@ public final class Polynomial extends Function {
         } else {
             return 0;
         }
-        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent
+        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent  
         otherwise term is constant either term types are added to a total value */
     }
 }
