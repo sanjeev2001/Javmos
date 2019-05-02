@@ -24,7 +24,7 @@ public class JavmosPanel extends JPanel {
     }
 
     public Function getFunction() {
-        //Takes the equation and checks for specific terms that determine what type of function it is then the specific Function obeject is created  
+        //Takes the equation and checks for specific terms that determine what type of function it is then the specific Function obeject is created
         if (gui.getEquationField().contains("log") || gui.getEquationField().contains("ln")) {
             return new Logarithmic(gui, gui.getEquationField());
         } else if (gui.getEquationField().contains("tan")) {
@@ -61,7 +61,8 @@ public class JavmosPanel extends JPanel {
         CartesianPlane plane = new CartesianPlane(gui);
         setPlane(plane);//Sets the plane on the panel
 
-        if (!gui.getEquationField().contains("ENTER")) {//Only sets the function once the equation field no longer contains the default phrase
+        //Only sets the function once the equation field no longer contains the default phrase
+        if (!gui.getEquationField().contains("ENTER")) {
             setFunction(getFunction());
         }
 

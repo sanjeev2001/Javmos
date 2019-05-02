@@ -12,7 +12,7 @@ public enum RootType {
     X_INTERCEPT(Color.GREEN, "x-intercept", FunctionType.ORIGINAL, FunctionType.FIRST_DERIVATIVE),
     CRITICAL_POINT(Color.RED, "Critical Point", FunctionType.FIRST_DERIVATIVE, FunctionType.SECOND_DERIVATIVE),
     INFLECTION_POINT(Color.BLUE, "Inflection Point", FunctionType.SECOND_DERIVATIVE, FunctionType.THIRD_DERIVATIVE);
-    
+
     public final int ATTEMPTS = 100;
     public final FunctionType functionOne;
     public final FunctionType functionTwo;
@@ -25,7 +25,7 @@ public enum RootType {
         this.functionOne = functionOne;
         this.functionTwo = functionTwo;
     }
-    
+
     public Color getRootColor() {
         return rootColor;
     }
@@ -40,7 +40,7 @@ public enum RootType {
         HashSet<Point> roots = new HashSet<>();
         minDomain = -400 / gui.getZoom() * gui.getDomainStep();
         maxDomain = 400 / gui.getZoom() * gui.getDomainStep();
-        //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points  
+        //Runs newtons method across a certain domain to find roots based on the given rootType, roots are then added to the hashet to be later used to draw the points
         for (double i = minDomain; i < maxDomain; i += 0.1) {
             if (newtonsMethod(function, i, ATTEMPTS) != null) {
                 if (rootName.equals("x-intercept")) {

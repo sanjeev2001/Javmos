@@ -16,16 +16,19 @@ public final class Cosine extends Trigonometric {
 
     @Override
     public java.lang.String getFirstDerivative() {
-        return "f'(x) = " + -a * k + "sin(" + k + "x)"; //Returns a string that contains the first derivative
+        //Returns a string that contains the first derivative
+        return "f'(x) = " + -a * k + "sin(" + k + "x)";
     }
 
     @Override
     public java.lang.String getSecondDerivative() {
-        return "f''(x) = " + a * Math.pow(k, 2) + "cos(" + k + "x)"; //Returns a string that contains the second derivative
+        //Returns a string that contains the second derivative
+        return "f''(x) = " + a * Math.pow(k, 2) + "cos(" + k + "x)";
     }
 
     @Override
-    public double getValueAt(double x, FunctionType functionType) { //Calculates the value of the cosine function given the x value and the function type  
+    //Calculates the value of the cosine function given the x value and the function type
+    public double getValueAt(double x, FunctionType functionType) {
         if (functionType == FunctionType.FIRST_DERIVATIVE) {
             return -a * k * Math.sin(k * x);
         } else if (functionType == FunctionType.SECOND_DERIVATIVE) {

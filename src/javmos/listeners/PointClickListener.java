@@ -17,7 +17,7 @@ public class PointClickListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent event) {
-       if (points != null) {
+        if (points != null) {
             for (Point point : points) {
                 if (point.getPoint().contains(event.getX(), event.getY())) {
                     gui.setPointLabel(point.toString(), point.getRootType());

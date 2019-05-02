@@ -18,18 +18,32 @@ public abstract class Function extends JavmosComponent {
 
     @Override
     public void draw(java.awt.Graphics2D graphics2D) {
+        String function = gui.getEquationField();
+        double k = 0;
         double x1, x2, y1, y2;
         for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.01) {
-            if (getValueAt(i, FunctionType.ORIGINAL) <= gui.getMaxRange() && getValueAt(i, FunctionType.ORIGINAL) >= gui.getMinRange()) {//only draws within the given max and min range
+            //only draws within the given max and min range
+            if (getValueAt(i, FunctionType.ORIGINAL) <= gui.getMaxRange() && getValueAt(i, FunctionType.ORIGINAL) >= gui.getMinRange()) {
                 x1 = i * gui.getZoom() / gui.getDomainStep();
                 y1 = getValueAt(i, FunctionType.ORIGINAL) * gui.getZoom() / gui.getRangeStep();
                 x2 = (i + 0.01) * gui.getZoom() / gui.getDomainStep();
                 y2 = getValueAt(i + 0.01, FunctionType.ORIGINAL) * gui.getZoom() / gui.getRangeStep();
                 graphics2D.setStroke(new BasicStroke(3));
                 graphics2D.setColor(Color.black);
-                Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);//Creates the line object to be drawn  
-
-                if (line.getY1() + 10000 > line.getY2()) {//Only draws lines in relatively small intervals to avoid drawing vertical asymptotes
+                //Creates the line object to be drawn
+                Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);
+                //System.out.println("y1: " + line.getY1() + " y2: " + line.getY2());
+                if (function.contains("tan")) {
+                    //Uses the k value
+                    if (function.contains("(x")) {
+                        k = 1;
+                    } else if (function.contains("(-x")) {
+                        k = -1;
+                    } else {
+                        k = Double.parseDouble(function.substring(function.indexOf("(") + 1, function.indexOf("x")));
+                    }
+                }
+                if (!(function.contains("tan")) || (line.getY1() > line.getY2() && k > 0) || (line.getY2() > line.getY1() && k < 0)) {
                     graphics2D.draw(line);
                 }
             }

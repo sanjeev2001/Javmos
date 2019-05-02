@@ -6,7 +6,7 @@ import javmos.JavmosGUI;
 import javmos.components.JavmosPanel;
 
 public class ZoomListener implements ActionListener {
-    
+
     private final int ZOOM_FACTOR = 10;
     private final JavmosGUI gui;
     private final JavmosPanel panel;

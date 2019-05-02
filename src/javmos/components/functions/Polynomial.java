@@ -11,9 +11,10 @@ public final class Polynomial extends Function {
 
     public Polynomial(JavmosGUI gui, String function) {
         super(gui);
-
-        function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function; //if an = sign exists evrything after it is taken as the polynomial otherwise polynomial is taken by itself
-        String[] terms = function.charAt(0) == '-' ? function.substring(1, function.length()).split("\\+|\\-") : function.split("\\+|\\-"); //# of terms is equal to the length of an array that splits the + and - signs from polynomial
+        //if an = sign exists, evrything after it is taken as the polynomial, otherwise polynomial is taken by itself
+        function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function;
+        //# of terms is equal to the length of an array that splits the + and - signs from polynomial
+        String[] terms = function.charAt(0) == '-' ? function.substring(1, function.length()).split("\\+|\\-") : function.split("\\+|\\-");
         coefficients = new double[terms.length]; //# of coeffs = number of total terms
         degrees = new int[terms.length]; //# of degrees = number of total terms
         int termsStart = 0;
@@ -28,17 +29,20 @@ public final class Polynomial extends Function {
                 }
                 degrees[i] = Integer.parseInt(terms[i].substring(terms[i].indexOf("^") + 1, terms[i].length())); //take everything after the ^ as degree
             } else if (terms[i].contains("x") && !terms[i].contains("^")) {
-                coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x"))); //if length of term is 1 then coeff must be 1, otherwise everything before the x is taken as coeff
+                //if length of term is 1 then coeff must be 1, otherwise everything before the x is taken as coeff
+                coefficients[i] = terms[i].length() == 1 ? 1 : Double.parseDouble(terms[i].substring(0, terms[i].indexOf("x")));
                 degrees[i] = 1; //degree must be 1
             } else {
                 coefficients[i] = Double.parseDouble(terms[i]); //non x term therefore entire terms is parsed
                 degrees[i] = 0; //non x term therefore degree = 0
-            }
-            coefficients[i] *= (function.contains("-") && function.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1; //if a - exists in the polynomial and the first character of ther terms is -, multiply coeffeicient by -1
-            termsStart += i == 0 && !(function.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1; //used to refernce where each term begins relative to the entire polynomial string
+            }//if a - exists in the polynomial and the first character of ther terms is -, multiply coeffeicient by -1
+            coefficients[i] *= (function.contains("-") && function.substring(termsStart, termsStart + 1).equals("-")) ? -1 : 1;
+            //used to refernce where each term begins relative to the entire polynomial string
+            termsStart += i == 0 && !(function.charAt(0) == '-') ? terms[i].length() : terms[i].length() + 1;
         }
     }
 
+    @Override
     public String getFirstDerivative() {
         String firstString = "f'(x)=";
         //Applies power rule to every term
@@ -52,6 +56,7 @@ public final class Polynomial extends Function {
         return firstString;
     }
 
+    @Override
     public String getSecondDerivative() {
         String secondString = "f''(x)=";
         //Applies power rule to every term twice
@@ -65,14 +70,15 @@ public final class Polynomial extends Function {
         return secondString;
     }
 
+    @Override
     public double getValueAt(double x, FunctionType functionType) {
         int[] temp = degrees.clone();
         Arrays.sort(temp);
         double ans = 0.0;
 
-        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent  
+        /*runs loop for total # of terms and if the terms has an x, it is multiplied by the respective coeff and the respective degree is used as an exponent
         otherwise term is constant, both term types are added to a total value named ans  */
-        //If higher degree derivative is needed, derivative is calculated then getValue is run again with new Polynomial object 
+        //If higher degree derivative is needed, derivative is calculated then getValue is run again with new Polynomial object
         if (functionType == FunctionType.ORIGINAL) {
             for (int i = 0; i < coefficients.length; i++) {
                 if (degrees[i] > 0) {

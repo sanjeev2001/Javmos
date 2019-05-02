@@ -8,7 +8,7 @@ import java.util.Objects;
 import javmos.JavmosGUI;
 import javmos.enums.RootType;
 
-public class Point extends JavmosComponent{
+public class Point extends JavmosComponent {
 
     public Ellipse2D.Double point;
     public final int RADIUS = 5;

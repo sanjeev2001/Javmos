@@ -16,11 +16,13 @@ public class Logarithmic extends Function {
     public double base;
     public double k;
 
-    public Logarithmic(JavmosGUI gui, String function) {//Parses the log/ln function to obtain the a, k, and base values
+    //Parses the log/ln function to obtain the a, k, and base values
+    public Logarithmic(JavmosGUI gui, String function) {
         super(gui);
         function = function.contains("=") ? function.substring(function.indexOf("=") + 1, function.length()) : function;
 
-        if (function.substring(0, 1).equals("l")) {//Extracts the numbers that exist before the 'l' in log/ln
+        //Extracts the numbers that exist before the 'l' in log/ln
+        if (function.substring(0, 1).equals("l")) {
             a = 1;
         } else if (function.substring(0, 2).equals("-l")) {
             a = -1;
@@ -28,7 +30,8 @@ public class Logarithmic extends Function {
             a = Double.parseDouble(function.substring(0, function.indexOf("l")));
         }
 
-        if (function.contains("ln")) {//Extracts the number prior to the '(' and after the 'g' or sets the base to 'E' if ln is present  
+        //Extracts the number prior to the '(' and after the 'g' or sets the base to 'E' if ln is present
+        if (function.contains("ln")) {
             base = Math.E;
         } else if (function.contains("g(")) {
             base = 10;
@@ -36,7 +39,8 @@ public class Logarithmic extends Function {
             base = Double.parseDouble(function.substring(function.indexOf("g") + 1, function.indexOf("(")));
         }
 
-        if (function.contains("(x")) {//Extracts the numbers prior to 'x' and after '('
+        //Extracts the numbers prior to 'x' and after '('
+        if (function.contains("(x")) {
             k = 1;
         } else if (function.contains("(-x")) {
             k = -1;
@@ -57,16 +61,19 @@ public class Logarithmic extends Function {
 
     @Override
     public String getFirstDerivative() {
-        return base == Math.E ? "f'(x) = " + a + "/" + "x" : "f'(x) = " + a + "/" + "(xln" + base + ")"; //Returns a string that contains the first derivative
+        //Returns a string that contains the first derivative
+        return base == Math.E ? "f'(x) = " + a + "/" + "x" : "f'(x) = " + a + "/" + "(xln" + base + ")";
     }
 
     @Override
     public String getSecondDerivative() {
-        return base == Math.E ? "f''(x) = " + -a + "/" + "x^2" : "f''(x) = " + -a + "/" + "(x^2ln" + base + ")"; //Returns a string that contains the second derivative
+        //Returns a string that contains the second derivative
+        return base == Math.E ? "f''(x) = " + -a + "/" + "x^2" : "f''(x) = " + -a + "/" + "(x^2ln" + base + ")";
     }
 
     @Override
-    public double getValueAt(double x, FunctionType functionType) { //Calculates the value of the logarithmic function given the x value and the function type
+    //Calculates the value of the logarithmic function given the x value and the function type
+    public double getValueAt(double x, FunctionType functionType) {
         if (functionType == FunctionType.FIRST_DERIVATIVE) {
             return a / (x * Math.log(base));
         } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
