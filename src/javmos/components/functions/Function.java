@@ -19,8 +19,6 @@ public abstract class Function extends JavmosComponent {
     @Override
     public void draw(java.awt.Graphics2D graphics2D) {
         String function = gui.getEquationField();
-        double a = 0;
-        double k = 0;
         String name = "tan";
         double x1, x2, y1, y2;
         for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.01) {
@@ -34,33 +32,20 @@ public abstract class Function extends JavmosComponent {
                 graphics2D.setColor(Color.black);
                 //Creates the line object to be drawn
                 Line2D.Double line = new Line2D.Double(400 + x1, 400 - y1, 400 + x2, 400 - y2);
-                //System.out.println("y1: " + line.getY1() + " y2: " + line.getY2());
-                if (function.contains("tan")) {
-                    //Checks the sign of the a and k value in order to avoid drawing asymptotes
-                    if (function.substring(0, 1).equals(Character.toString(name.charAt(0)))) {
-                        a = 1;
-                    } else if (function.substring(0, 2).equals("-" + name.charAt(0))) {
-                        a = -1;
-                    } else {
-                        a = Double.parseDouble(function.substring(0, function.indexOf(Character.toString(name.charAt(0)))));
-                    }
 
-                    if (function.contains("(x")) {
-                        k = 1;
-                    } else if (function.contains("(-x")) {
-                        k = -1;
-                    } else {
-                        k = Double.parseDouble(function.substring(function.indexOf("(") + 1, function.indexOf("x")));
+                if (gui.getEquationField().contains("tan")) {
+                    Tangent tan = new Tangent(gui, gui.getEquationField());
+                    if (tan.a < 0 && tan.k < 0) {
+                        tan.a = 1;
+                        tan.k = 1;
                     }
-
-                    if (a < 0 && k < 0) {
-                        a = 1;
-                        k = 1;
+                    if ((line.getY1() > line.getY2() && tan.k > 0 && tan.a > 0) || (line.getY2() > line.getY1() && (tan.k < 0 || tan.a < 0))) {
+                        graphics2D.draw(line);
                     }
-                }
-                if (!(function.contains("tan")) || (line.getY1() > line.getY2() && k > 0 && a > 0) || (line.getY2() > line.getY1() && (k < 0 || a < 0))) {
+                } else {
                     graphics2D.draw(line);
                 }
+
             }
         }
     }
