@@ -29,14 +29,15 @@ public final class Sine extends Trigonometric {
     @Override
     public double getValueAt(double x, FunctionType functionType) {
         //Calculates the value of the sine function given the x value and the function type
-        if (functionType == FunctionType.FIRST_DERIVATIVE) {
-            return a * k * Math.cos(k * x);
-        } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
-            return -a * Math.pow(k, 2) * Math.sin(k * x);
-        } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
-            return -a * Math.pow(k, 3) * Math.cos(k * x);
-        } else {
-            return a * Math.sin(k * x);
+        switch (functionType) {
+            case FIRST_DERIVATIVE:
+                return a * k * Math.cos(k * x);
+            case SECOND_DERIVATIVE:
+                return -a * Math.pow(k, 2) * Math.sin(k * x);
+            case THIRD_DERIVATIVE:
+                return -a * Math.pow(k, 3) * Math.cos(k * x);
+            default:
+                return a * Math.sin(k * x);
         }
     }
 }

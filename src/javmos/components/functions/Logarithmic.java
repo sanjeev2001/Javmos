@@ -74,14 +74,15 @@ public class Logarithmic extends Function {
     @Override
     public double getValueAt(double x, FunctionType functionType) {
         //Calculates the value of the logarithmic function given the x value and the function type
-        if (functionType == FunctionType.FIRST_DERIVATIVE) {
-            return a / (x * Math.log(base));
-        } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
-            return -a / (Math.pow(x, 2) * Math.log(base));
-        } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
-            return (2 * a) / (Math.log(base) * Math.pow(x, 3));
-        } else {
-            return a * (Math.log10(k * x) / Math.log10(base));
+        switch (functionType) {
+            case FIRST_DERIVATIVE:
+                return a / (x * Math.log(base));
+            case SECOND_DERIVATIVE:
+                return -a / (Math.pow(x, 2) * Math.log(base));
+            case THIRD_DERIVATIVE:
+                return (2 * a) / (Math.log(base) * Math.pow(x, 3));
+            default:
+                return a * (Math.log10(k * x) / Math.log10(base));
         }
     }
 }

@@ -40,14 +40,15 @@ public final class Tangent extends Trigonometric {
     @Override
     public double getValueAt(double x, FunctionType functionType) {
         //Calculates the value of the tangent function given the x value and the function type
-        if (functionType == FunctionType.FIRST_DERIVATIVE) {
-            return a * k * Math.pow(1 / Math.cos(k * x), 2);
-        } else if (functionType == FunctionType.SECOND_DERIVATIVE) {
-            return 2 * a * Math.pow(k, 2) * Math.pow(1 / Math.cos(k * x), 2) * Math.tan(k * x);
-        } else if (functionType == FunctionType.THIRD_DERIVATIVE) {
-            return 2 * a * Math.pow(k, 2) * (2 * k * Math.pow(1 / Math.cos(k * x), 2) * Math.pow(Math.tan(k * x), 2) + k * Math.pow(1 / Math.cos(k * x), 4));
-        } else {
-            return a * Math.tan(k * x);
+        switch (functionType) {
+            case FIRST_DERIVATIVE:
+                return a * k * Math.pow(1 / Math.cos(k * x), 2);
+            case SECOND_DERIVATIVE:
+                return 2 * a * Math.pow(k, 2) * Math.pow(1 / Math.cos(k * x), 2) * Math.tan(k * x);
+            case THIRD_DERIVATIVE:
+                return 2 * a * Math.pow(k, 2) * (2 * k * Math.pow(1 / Math.cos(k * x), 2) * Math.pow(Math.tan(k * x), 2) + k * Math.pow(1 / Math.cos(k * x), 4));
+            default:
+                return a * Math.tan(k * x);
         }
     }
 }

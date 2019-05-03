@@ -12,6 +12,7 @@ public class CartesianPlane extends JavmosComponent {
         super(gui);
     }
 
+    @Override
     public void draw(java.awt.Graphics2D graphics2D) {
         int pixel = (int) gui.getZoom();
         int scaleFactor = gui.getZoom() == 10 ? 2 : 1;
@@ -24,10 +25,10 @@ public class CartesianPlane extends JavmosComponent {
 
         for (int i = 0; i < 800 / pixel; i++) {
             graphics2D.setStroke(new BasicStroke(1)); //Sets thin line stroke
-            graphics2D.drawLine(400 - pixel * i, 0, 400 - pixel * i, 800); //(x1, y1, x2, y2) draws thin vertical lines 
-            graphics2D.drawLine(0, 400 - pixel * i, 800, 400 - pixel * i);//(x1, y1, x2, y2) draws thin horizontal line 
-            graphics2D.drawLine(400 + pixel * i, 0, 400 + pixel * i, 800); //(x1, y1, x2, y2) draws thin vertical line 
-            graphics2D.drawLine(0, 400 + pixel * i, 800, 400 + pixel * i);//(x1, y1, x2, y2) draws thin horizontal line 
+            graphics2D.drawLine(400 - pixel * i, 0, 400 - pixel * i, 800); //(x1, y1, x2, y2) draws thin vertical lines
+            graphics2D.drawLine(0, 400 - pixel * i, 800, 400 - pixel * i);//(x1, y1, x2, y2) draws thin horizontal line
+            graphics2D.drawLine(400 + pixel * i, 0, 400 + pixel * i, 800); //(x1, y1, x2, y2) draws thin vertical line
+            graphics2D.drawLine(0, 400 + pixel * i, 800, 400 + pixel * i);//(x1, y1, x2, y2) draws thin horizontal line
             graphics2D.setStroke(new BasicStroke(3));//Sets thick line stroke
             graphics2D.drawLine(400, 0, 400, 800); //y-axis
             graphics2D.drawLine(0, 400, 800, 400); //x-axis

@@ -23,6 +23,7 @@ public class Point extends JavmosComponent {
         this.y = y;
     }
 
+    @Override
     public void draw(Graphics2D graphics2D) {
         //Only draws when the point is within the min and max domain and range
         if (x > gui.getMinDomain() && x < gui.getMaxDomain() && y > gui.getMinRange() && y < gui.getMaxRange()) {
