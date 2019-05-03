@@ -88,7 +88,7 @@ public final class Polynomial extends Function {
                 }
             }
             return ans;
-        } else if (functionType == FunctionType.FIRST_DERIVATIVE) {
+        } else if (functionType == FunctionType.FIRST_DERIVATIVE && temp[temp.length - 1] >= 1) {
             return new Polynomial(gui, this.getFirstDerivative()).getValueAt(x, FunctionType.ORIGINAL);
         } else if (functionType == FunctionType.SECOND_DERIVATIVE && temp[temp.length - 1] >= 2) {
             return new Polynomial(gui, this.getSecondDerivative()).getValueAt(x, FunctionType.ORIGINAL);
