@@ -15,8 +15,8 @@ import javmos.listeners.PointClickListener;
 
 public class JavmosPanel extends JPanel {
 
-    private final JavmosGUI gui;
     private final LinkedList<JavmosComponent> components;
+    private final JavmosGUI gui;
 
     public JavmosPanel(JavmosGUI gui) {
         this.gui = gui;
@@ -38,8 +38,19 @@ public class JavmosPanel extends JPanel {
         }
     }
 
-    public void setPlane(CartesianPlane plane) {
-        components.add(plane);
+    @Override
+    public void paintComponent(Graphics graphics) {
+        CartesianPlane plane = new CartesianPlane(gui);
+        setPlane(plane);//Sets the plane on the panel
+
+        //Only sets the function once the equation field no longer contains the default phrase
+        if (!gui.getEquationField().contains("ENTER")) {
+            setFunction(getFunction());
+        }
+
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).draw((Graphics2D) graphics); //Draws all the components that are in the list
+        }
     }
 
     public void setFunction(Function function) {
@@ -56,18 +67,7 @@ public class JavmosPanel extends JPanel {
         this.addMouseListener(clickListener); //Adds a listener to each point so that they can be clicked
     }
 
-    @Override
-    public void paintComponent(Graphics graphics) {
-        CartesianPlane plane = new CartesianPlane(gui);
-        setPlane(plane);//Sets the plane on the panel
-
-        //Only sets the function once the equation field no longer contains the default phrase
-        if (!gui.getEquationField().contains("ENTER")) {
-            setFunction(getFunction());
-        }
-
-        for (int i = 0; i < components.size(); i++) {
-            components.get(i).draw((Graphics2D) graphics); //Draws all the components that are in the list
-        }
+    public void setPlane(CartesianPlane plane) {
+        components.add(plane);
     }
 }

@@ -55,14 +55,14 @@ public class Logarithmic extends Function {
     }
 
     @Override
-    public HashSet<Point> getInflectionPoints() {
-        return new HashSet<>();
-    }
-
-    @Override
     public String getFirstDerivative() {
         //Returns a string that contains the first derivative
         return base == Math.E ? "f'(x) = " + a + "/" + "x" : "f'(x) = " + a + "/" + "(xln" + base + ")";
+    }
+
+    @Override
+    public HashSet<Point> getInflectionPoints() {
+        return new HashSet<>();
     }
 
     @Override
@@ -72,8 +72,8 @@ public class Logarithmic extends Function {
     }
 
     @Override
-    //Calculates the value of the logarithmic function given the x value and the function type
     public double getValueAt(double x, FunctionType functionType) {
+        //Calculates the value of the logarithmic function given the x value and the function type
         if (functionType == FunctionType.FIRST_DERIVATIVE) {
             return a / (x * Math.log(base));
         } else if (functionType == FunctionType.SECOND_DERIVATIVE) {

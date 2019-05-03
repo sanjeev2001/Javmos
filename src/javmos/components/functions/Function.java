@@ -18,8 +18,6 @@ public abstract class Function extends JavmosComponent {
 
     @Override
     public void draw(java.awt.Graphics2D graphics2D) {
-        String function = gui.getEquationField();
-        String name = "tan";
         double x1, x2, y1, y2;
         for (double i = gui.getMinDomain(); i < gui.getMaxDomain(); i += 0.01) {
             //only draws within the given max and min range
@@ -45,7 +43,6 @@ public abstract class Function extends JavmosComponent {
                 } else {
                     graphics2D.draw(line);
                 }
-
             }
         }
     }

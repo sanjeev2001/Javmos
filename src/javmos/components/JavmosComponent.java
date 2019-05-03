@@ -5,6 +5,7 @@
  */
 package javmos.components;
 
+import java.awt.Graphics2D;
 import javmos.JavmosGUI;
 
 /**
@@ -19,5 +20,5 @@ public abstract class JavmosComponent extends java.lang.Object {
         this.gui = gui;
     }
 
-    public abstract void draw(java.awt.Graphics2D graphics2D);
+    public abstract void draw(Graphics2D graphics2D);
 }
